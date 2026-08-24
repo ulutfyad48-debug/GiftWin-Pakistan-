@@ -1,7 +1,7 @@
 // =====================================================================
 // MONTHLY LUCKY DRAW SETTINGS
 // Change ONLY the settings in this file every month.
-// You do NOT need to edit index.html â€” ever, for normal monthly updates.
+// You do NOT need to edit index.html — ever, for normal monthly updates.
 // =====================================================================
 
 const LUCKY_DRAW_CONFIG = {
@@ -30,13 +30,13 @@ const LUCKY_DRAW_CONFIG = {
     // ---------------------------------------------------------------
     // 4. TITLE & SUBTITLE (Urdu, shown in the hero section)
     // ---------------------------------------------------------------
-    title: "Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§",
-    subtitle: "Ø§Ø³ Ù…Ø§Û Ú©ÛŒ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ø´Ø±ÙˆØ¹ ÛÙˆ Ú†Ú©ÛŒ ÛÛ’!",
+    title: "ماہانہ لکی ڈرا",
+    subtitle: "اس ماہ کی رجسٹریشن شروع ہو چکی ہے!",
 
     // ---------------------------------------------------------------
     // 5. REWARDS
     // Add, remove, or rename as many rewards as you like.
-    // The website automatically creates one card per reward â€” you are
+    // The website automatically creates one card per reward — you are
     // not limited to any fixed number.
     //
     // For each reward:
@@ -60,3 +60,10 @@ const LUCKY_DRAW_CONFIG = {
     // ---------------------------------------------------------------
     whatsappNumber: "923125540048"
 };
+
+// =====================================================================
+// IMPORTANT NOTE:
+// City field is now a simple text input. No API, no token, no CORS issues.
+// Users can type any city name. This is the simplest and most reliable
+// solution for a static website.
+// =====================================================================
