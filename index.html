@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ماہانہ لکی ڈرا رجسٹریشن</title>
-    <meta name="description" content="ماہانہ لکی ڈرا میں مفت رجسٹریشن کریں اور خصوصی انعامات جیتنے کا موقع حاصل کریں۔">
+    <title>GiftWin Pakistan - ماہانہ لکی ڈرا رجسٹریشن</title>
+    <meta name="description" content="GiftWin Pakistan کے ماہانہ لکی ڈرا میں مفت رجسٹریشن کریں اور خصوصی انعامات جیتنے کا موقع حاصل کریں۔">
     <style>
         /* ==========================================================================
            DESIGN TOKENS
@@ -379,6 +379,59 @@
         }
 
         /* ==========================================================================
+           TERMS & CONDITIONS
+           ========================================================================== */
+        .terms-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            padding: 28px 24px;
+        }
+        .terms-section .terms-title {
+            font-family: var(--font-display);
+            font-size: 22px;
+            color: var(--gold);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .terms-section .terms-title small {
+            display: block;
+            font-family: var(--font-ui);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+            margin-top: 4px;
+        }
+        .terms-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            counter-reset: terms-counter;
+        }
+        .terms-list li {
+            font-size: 14px;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            counter-increment: terms-counter;
+        }
+        .terms-list li::before {
+            content: counter(terms-counter) ".";
+            color: var(--gold);
+            font-weight: 700;
+            font-size: 14px;
+            flex-shrink: 0;
+            min-width: 24px;
+            text-align: left;
+        }
+        .terms-list li strong {
+            color: var(--gold-soft);
+        }
+
+        /* ==========================================================================
            FORM CARD
            ========================================================================== */
         .form-card {
@@ -631,6 +684,10 @@
             color: rgba(255, 255, 255, 0.4);
             line-height: 1.9;
         }
+        .footer .brand {
+            color: var(--gold-soft);
+            font-weight: 600;
+        }
 
         /* Gift/decorative icons */
         .decor-row {
@@ -658,11 +715,6 @@
                 font-size: 52px;
             }
         }
-
-        /* Small spacing tweaks */
-        .mt-0 {
-            margin-top: 0;
-        }
     </style>
 </head>
 <body>
@@ -673,7 +725,7 @@
     <section class="hero">
         <canvas id="confetti-canvas"></canvas>
         <div class="wrap">
-            <span class="hero-badge">🎁 <span id="hero-eyebrow">ماہانہ لکی ڈرا</span></span>
+            <span class="hero-badge">🎁 <span id="hero-eyebrow">GiftWin Pakistan</span></span>
             <div class="hero-month" id="hero-month"></div>
             <h1 class="hero-title" id="hero-title"></h1>
             <p class="hero-subtitle" id="hero-subtitle"></p>
@@ -738,6 +790,36 @@
     </section>
 
     <!-- ==========================================================================
+    TERMS & CONDITIONS
+    ========================================================================== -->
+    <section class="section" style="padding-top:0;">
+        <div class="wrap">
+            <div class="terms-section">
+                <div class="terms-title">
+                    GiftWin Pakistan
+                    <small>لکی ڈرا — شرائط و ضوابط</small>
+                </div>
+                <ol class="terms-list">
+                    <li>لکی ڈرا میں رجسٹریشن بالکل مفت ہے۔ کسی قسم کی رجسٹریشن فیس یا چارج نہیں لیا جاتا۔</li>
+                    <li>رجسٹریشن کے وقت اپنا درست نام، مکمل پتہ اور فعال موبائل نمبر فراہم کرنا ضروری ہے۔</li>
+                    <li>غلط، جعلی یا نامکمل معلومات فراہم کرنے کی صورت میں رجسٹریشن منسوخ کی جا سکتی ہے۔</li>
+                    <li>اگر آپ لکی ڈرا میں منتخب ہوتے ہیں تو آپ کا گفٹ آپ کے فراہم کردہ پتے پر کورئیر/ڈیلیوری سروس کے ذریعے بھیجا جائے گا۔</li>
+                    <li>گفٹ کی قیمت آپ سے نہیں لی جائے گی۔ تاہم، ڈیلیوری چارجز وصول کیے جا سکتے ہیں۔</li>
+                    <li>پارسل بھیجے جانے کے بعد، اگر آپ ڈیلیوری کے وقت پارسل قبول کرنے سے انکار کرتے ہیں یا پارسل وصول نہیں کرتے تو پارسل کورئیر کمپنی کے ذریعے واپس بھیجا جا سکتا ہے۔</li>
+                    <li>اگر آپ کی جانب سے پارسل وصول نہ کرنے کی وجہ سے پارسل واپس آتا ہے، تو اس کے Return Charges آپ کو آن لائن ادا کرنے ہوں گے۔</li>
+                    <li>Return Charges ادا نہ کرنے کی صورت میں آپ کو آئندہ لکی ڈرا میں شرکت سے روک دیا جا سکتا ہے۔</li>
+                    <li>جان بوجھ کر جعلی رجسٹریشن، غلط موبائل نمبر، غلط پتہ یا Fake Order/Registration کرنے کی صورت میں متعلقہ رجسٹریشن منسوخ کی جا سکتی ہے۔</li>
+                    <li>ایک شخص کی جانب سے متعدد جعلی یا غیر ضروری رجسٹریشنز کی صورت میں تمام متعلقہ رجسٹریشنز منسوخ کی جا سکتی ہیں۔</li>
+                    <li>گفٹ کی ڈیلیوری کے لیے درست پتہ اور فعال موبائل نمبر فراہم کرنا رجسٹریشن کرنے والے کی ذمہ داری ہے۔</li>
+                    <li>کسی بھی وجہ سے گفٹ کی ڈیلیوری ممکن نہ ہونے کی صورت میں، <strong>GiftWin Pakistan</strong> مناسب طریقے سے مسئلہ حل کرنے کی کوشش کرے گا۔</li>
+                    <li>لکی ڈرا کے نتائج اور گفٹس کی تعداد/قسم <strong>GiftWin Pakistan</strong> کے اعلان کے مطابق ہوگی۔</li>
+                    <li>لکی ڈرا میں رجسٹریشن کرنے سے آپ ان Terms & Conditions کو قبول کرتے ہیں۔</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========================================================================
     REGISTRATION FORM
     ========================================================================== -->
     <section class="section" id="register">
@@ -758,8 +840,6 @@
 
                 <!-- Shown when registration is OPEN -->
                 <form id="registration-form" novalidate>
-                    <!-- NOTE: All inputs are RTL by default because of dir="rtl" on the html element.
-                         For phone numbers and mixed content we add dir="ltr" only on the input itself. -->
 
                     <div class="field" id="field-name">
                         <label for="input-name">نام <span class="required-mark">*</span></label>
@@ -808,8 +888,9 @@
     </section>
 
     <footer class="footer">
+        <div class="brand">GiftWin Pakistan</div>
         <div id="footer-month"></div>
-        <div>© <span id="footer-year"></span> ماہانہ لکی ڈرا — تمام حقوق محفوظ ہیں۔</div>
+        <div>© <span id="footer-year"></span> — تمام حقوق محفوظ ہیں۔</div>
     </footer>
 
     <!-- ==========================================================================
@@ -850,7 +931,7 @@
             }
 
             // --- Hero text ---
-            document.getElementById("hero-eyebrow").textContent = cfg.title || "ماہانہ لکی ڈرا";
+            document.getElementById("hero-eyebrow").textContent = cfg.brand || "GiftWin Pakistan";
             document.getElementById("hero-title").textContent = cfg.title || "ماہانہ لکی ڈرا";
             document.getElementById("hero-subtitle").textContent = cfg.subtitle || "";
             document.getElementById("hero-month").textContent = "🗓️ " + (cfg.monthName || "");
@@ -943,7 +1024,6 @@
             }
 
             function isValidPakMobile(v) {
-                // Accepts 03XXXXXXXXX (11 digits, starts with 03)
                 return /^03[0-9]{9}$/.test(v.trim());
             }
 
@@ -962,7 +1042,6 @@
             var inputAddress = document.getElementById("input-address");
             var inputTerms = document.getElementById("input-terms");
 
-            // Keep mobile fields numeric-only for convenience
             [inputMobile, inputEmergency].forEach(function(el) {
                 el.addEventListener("input", function() {
                     el.value = el.value.replace(/[^0-9]/g, "").slice(0, 11);
@@ -972,7 +1051,6 @@
             function validateForm() {
                 var valid = true;
 
-                // Name
                 if (inputName.value.trim().length < 2) {
                     showFieldError(fieldName);
                     valid = false;
@@ -980,7 +1058,6 @@
                     clearFieldError(fieldName);
                 }
 
-                // Mobile
                 if (!isValidPakMobile(inputMobile.value)) {
                     showFieldError(fieldMobile);
                     valid = false;
@@ -988,7 +1065,6 @@
                     clearFieldError(fieldMobile);
                 }
 
-                // Emergency number — must be a valid mobile AND different from primary
                 var emergencyValid = isValidPakMobile(inputEmergency.value) &&
                     inputEmergency.value.trim() !== inputMobile.value.trim();
                 if (!emergencyValid) {
@@ -998,7 +1074,6 @@
                     clearFieldError(fieldEmergency);
                 }
 
-                // City — simple non-empty check
                 if (inputCity.value.trim().length < 2) {
                     showFieldError(fieldCity);
                     valid = false;
@@ -1006,7 +1081,6 @@
                     clearFieldError(fieldCity);
                 }
 
-                // Address
                 if (inputAddress.value.trim().length < 8) {
                     showFieldError(fieldAddress);
                     valid = false;
@@ -1014,7 +1088,6 @@
                     clearFieldError(fieldAddress);
                 }
 
-                // Terms
                 if (!inputTerms.checked) {
                     termsError.style.display = "flex";
                     fieldTerms.classList.add("has-error");
@@ -1037,7 +1110,7 @@
 
             function buildWhatsAppMessage() {
                 var lines = [
-                    "🎁 نئی ماہانہ لکی ڈرا رجسٹریشن",
+                    "🎁 نئی ماہانہ لکی ڈرا رجسٹریشن - GiftWin Pakistan",
                     "",
                     "نام: " + inputName.value.trim(),
                     "موبائل نمبر: " + inputMobile.value.trim(),
@@ -1072,8 +1145,6 @@
                 whatsappLink.setAttribute("href", url);
                 successOverlay.classList.add("open");
 
-                // Open WhatsApp automatically with the pre-filled message.
-                // The user must still press Send themselves inside WhatsApp.
                 window.open(url, "_blank", "noopener");
             });
 
@@ -1087,7 +1158,7 @@
             });
 
             /* =====================================================================
-               3. AMBIENT CONFETTI (lightweight, canvas-based, hero only)
+               3. AMBIENT CONFETTI
                ===================================================================== */
             (function initConfetti() {
                 var canvas = document.getElementById("confetti-canvas");
