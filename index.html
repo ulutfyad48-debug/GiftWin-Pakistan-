@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ماہانہ لکی ڈرا رجسٹریشن</title>
-<meta name="description" content="ماہانہ لکی ڈرا میں مفت رجسٹریشن کریں اور خصوصی انعامات جیتنے کا موقع حاصل کریں۔">
+<title>Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù†</title>
+<meta name="description" content="Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§ Ù…ÛŒÚº Ù…ÙØª Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ú©Ø±ÛŒÚº Ø§ÙˆØ± Ø®ØµÙˆØµÛŒ Ø§Ù†Ø¹Ø§Ù…Ø§Øª Ø¬ÛŒØªÙ†Û’ Ú©Ø§ Ù…ÙˆÙ‚Ø¹ Ø­Ø§ØµÙ„ Ú©Ø±ÛŒÚºÛ”">
 
 <style>
 /* ==========================================================================
@@ -281,7 +281,7 @@ input, select{ font-family:inherit; }
     display:flex; align-items:flex-start; gap:8px;
 }
 .notice li::before{
-    content:"◆";
+    content:"â—†";
     color:var(--gold);
     font-size:9px;
     margin-top:7px;
@@ -563,7 +563,7 @@ input, select{ font-family:inherit; }
 <section class="hero">
     <canvas id="confetti-canvas"></canvas>
     <div class="wrap">
-        <span class="hero-badge">🎁 <span id="hero-eyebrow">ماہانہ لکی ڈرا</span></span>
+        <span class="hero-badge">ðŸŽ <span id="hero-eyebrow">Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§</span></span>
         <div class="hero-month" id="hero-month"></div>
         <h1 class="hero-title" id="hero-title"></h1>
         <p class="hero-subtitle" id="hero-subtitle"></p>
@@ -575,24 +575,24 @@ input, select{ font-family:inherit; }
 
         <div class="hero-cta">
             <a href="#register" class="btn-hero" id="hero-cta-btn">
-                <span>ابھی رجسٹر کریں</span>
-                <span>←</span>
+                <span>Ø§Ø¨Ú¾ÛŒ Ø±Ø¬Ø³Ù¹Ø± Ú©Ø±ÛŒÚº</span>
+                <span>â†</span>
             </a>
         </div>
 
         <div class="date-strip">
-            <div class="icon">📅</div>
+            <div class="icon">ðŸ“…</div>
             <div>
-                <div class="text-label">قرعہ اندازی / گفٹ ڈسپیچ کی تاریخ</div>
+                <div class="text-label">Ù‚Ø±Ø¹Û Ø§Ù†Ø¯Ø§Ø²ÛŒ / Ú¯ÙÙ¹ ÚˆØ³Ù¾ÛŒÚ† Ú©ÛŒ ØªØ§Ø±ÛŒØ®</div>
                 <div class="text-value" id="draw-date-text"></div>
             </div>
         </div>
 
         <div class="decor-row">
-            <div class="decor-chip">💻</div>
-            <div class="decor-chip">🎧</div>
-            <div class="decor-chip">⌨️</div>
-            <div class="decor-chip">🎉</div>
+            <div class="decor-chip">ðŸ’»</div>
+            <div class="decor-chip">ðŸŽ§</div>
+            <div class="decor-chip">âŒ¨ï¸</div>
+            <div class="decor-chip">ðŸŽ‰</div>
         </div>
     </div>
 </section>
@@ -603,9 +603,9 @@ input, select{ font-family:inherit; }
 <section class="section" id="rewards">
     <div class="wrap">
         <div class="section-header">
-            <span class="section-eyebrow">انعامات</span>
-            <h2 class="section-title">🎁 اس ماہ کے خصوصی انعامات</h2>
-            <p class="section-sub">ہر ماہ نئے اور دلچسپ انعامات — قرعہ اندازی میں شامل ہوں اور جیتنے کا موقع حاصل کریں۔</p>
+            <span class="section-eyebrow">Ø§Ù†Ø¹Ø§Ù…Ø§Øª</span>
+            <h2 class="section-title">ðŸŽ Ø§Ø³ Ù…Ø§Û Ú©Û’ Ø®ØµÙˆØµÛŒ Ø§Ù†Ø¹Ø§Ù…Ø§Øª</h2>
+            <p class="section-sub">ÛØ± Ù…Ø§Û Ù†Ø¦Û’ Ø§ÙˆØ± Ø¯Ù„Ú†Ø³Ù¾ Ø§Ù†Ø¹Ø§Ù…Ø§Øª â€” Ù‚Ø±Ø¹Û Ø§Ù†Ø¯Ø§Ø²ÛŒ Ù…ÛŒÚº Ø´Ø§Ù…Ù„ ÛÙˆÚº Ø§ÙˆØ± Ø¬ÛŒØªÙ†Û’ Ú©Ø§ Ù…ÙˆÙ‚Ø¹ Ø­Ø§ØµÙ„ Ú©Ø±ÛŒÚºÛ”</p>
         </div>
         <div class="rewards-grid" id="rewards-grid"></div>
     </div>
@@ -617,11 +617,11 @@ input, select{ font-family:inherit; }
 <section class="section" style="padding-top:0;">
     <div class="wrap">
         <div class="notice">
-            <div class="notice-title">⚠️ اہم معلومات</div>
+            <div class="notice-title">âš ï¸ Ø§ÛÙ… Ù…Ø¹Ù„ÙˆÙ…Ø§Øª</div>
             <ul>
-                <li>رجسٹریشن بالکل مفت ہے۔</li>
-                <li>کوئی Entry Fee یا Advance Payment نہیں لی جاتی۔</li>
-                <li>اگر آپ Lucky Draw میں منتخب ہوتے ہیں اور Gift/Parcel بھیجا جاتا ہے تو صرف Delivery Charges پارسل کی Delivery کے وقت رائیڈر کو ادا کرنے ہوں گے۔</li>
+                <li>Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ø¨Ø§Ù„Ú©Ù„ Ù…ÙØª ÛÛ’Û”</li>
+                <li>Ú©ÙˆØ¦ÛŒ Entry Fee ÛŒØ§ Advance Payment Ù†ÛÛŒÚº Ù„ÛŒ Ø¬Ø§ØªÛŒÛ”</li>
+                <li>Ø§Ú¯Ø± Ø¢Ù¾ Lucky Draw Ù…ÛŒÚº Ù…Ù†ØªØ®Ø¨ ÛÙˆØªÛ’ ÛÛŒÚº Ø§ÙˆØ± Gift/Parcel Ø¨Ú¾ÛŒØ¬Ø§ Ø¬Ø§ØªØ§ ÛÛ’ ØªÙˆ ØµØ±Ù Delivery Charges Ù¾Ø§Ø±Ø³Ù„ Ú©ÛŒ Delivery Ú©Û’ ÙˆÙ‚Øª Ø±Ø§Ø¦ÛŒÚˆØ± Ú©Ùˆ Ø§Ø¯Ø§ Ú©Ø±Ù†Û’ ÛÙˆÚº Ú¯Û’Û”</li>
             </ul>
         </div>
     </div>
@@ -633,17 +633,17 @@ input, select{ font-family:inherit; }
 <section class="section" id="register">
     <div class="wrap">
         <div class="section-header">
-            <span class="section-eyebrow">رجسٹریشن</span>
-            <h2 class="section-title">📝 اپنی معلومات درج کریں</h2>
+            <span class="section-eyebrow">Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù†</span>
+            <h2 class="section-title">ðŸ“ Ø§Ù¾Ù†ÛŒ Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ø¯Ø±Ø¬ Ú©Ø±ÛŒÚº</h2>
         </div>
 
         <div class="form-card">
 
             <!-- Shown when registration is CLOSED -->
             <div class="form-closed" id="form-closed" style="display:none;">
-                <div class="icon">🔒</div>
-                <div class="headline">رجسٹریشن فی الحال بند ہے</div>
-                <p class="body-text">اس ماہ کی رجسٹریشن فی الحال بند ہے۔ اگلے ماہ دوبارہ رجسٹریشن شروع ہوگی۔</p>
+                <div class="icon">ðŸ”’</div>
+                <div class="headline">Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† ÙÛŒ Ø§Ù„Ø­Ø§Ù„ Ø¨Ù†Ø¯ ÛÛ’</div>
+                <p class="body-text">Ø§Ø³ Ù…Ø§Û Ú©ÛŒ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† ÙÛŒ Ø§Ù„Ø­Ø§Ù„ Ø¨Ù†Ø¯ ÛÛ’Û” Ø§Ú¯Ù„Û’ Ù…Ø§Û Ø¯ÙˆØ¨Ø§Ø±Û Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ø´Ø±ÙˆØ¹ ÛÙˆÚ¯ÛŒÛ”</p>
             </div>
 
             <!-- Shown when registration is OPEN -->
@@ -652,45 +652,43 @@ input, select{ font-family:inherit; }
                 <div class="field" id="field-name">
                     <label for="input-name">Full Name <span class="required-mark">*</span></label>
                     <input type="text" id="input-name" autocomplete="name" placeholder="Enter your full name">
-                    <div class="error-msg">⚠️ Please enter your full name.</div>
+                    <div class="error-msg">âš ï¸ Please enter your full name.</div>
                 </div>
 
                 <div class="field" id="field-mobile">
                     <label for="input-mobile">Mobile Number <span class="required-mark">*</span></label>
                     <input type="tel" id="input-mobile" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
                     <div class="hint">Format: 03XXXXXXXXX</div>
-                    <div class="error-msg">⚠️ Please enter a valid mobile number (e.g. 03XXXXXXXXX).</div>
+                    <div class="error-msg">âš ï¸ Please enter a valid mobile number (e.g. 03XXXXXXXXX).</div>
                 </div>
 
                 <div class="field" id="field-emergency">
                     <label for="input-emergency">Emergency / Alternate Number <span class="required-mark">*</span></label>
                     <input type="tel" id="input-emergency" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
-                    <div class="error-msg">⚠️ Emergency number must be different from the mobile number.</div>
+                    <div class="error-msg">âš ï¸ Emergency number must be different from the mobile number.</div>
                 </div>
 
-                <div class="field city-field" id="field-city">
+                <div class="field" id="field-city">
                     <label for="input-city">City <span class="required-mark">*</span></label>
-                    <input type="text" id="input-city" class="city-input" placeholder="Search your city..." autocomplete="off">
-                    <div class="city-dropdown" id="city-dropdown"></div>
-                    <div class="city-status" id="city-status">Loading city list...</div>
-                    <div class="error-msg">⚠️ Please select your city from the list.</div>
+                    <input type="text" id="input-city" placeholder="Enter your city" autocomplete="address-level2">
+                    <div class="error-msg">âš ï¸ Please enter your city.</div>
                 </div>
 
                 <div class="field" id="field-address">
                     <label for="input-address">Complete Address <span class="required-mark">*</span></label>
                     <textarea id="input-address" placeholder="House no., street, area, city..."></textarea>
-                    <div class="error-msg">⚠️ Please enter your complete address.</div>
+                    <div class="error-msg">âš ï¸ Please enter your complete address.</div>
                 </div>
 
                 <div class="checkbox-field" id="field-terms">
                     <input type="checkbox" id="input-terms">
                     <label for="input-terms">I confirm that the information I have provided is accurate, and I understand the Lucky Draw terms.</label>
                 </div>
-                <div class="error-msg" id="terms-error" style="display:none; margin-top:-12px; margin-bottom:18px;">⚠️ You must accept the terms to continue.</div>
+                <div class="error-msg" id="terms-error" style="display:none; margin-top:-12px; margin-bottom:18px;">âš ï¸ You must accept the terms to continue.</div>
 
                 <button type="submit" class="btn-submit" id="submit-btn">
                     <span>Complete Registration</span>
-                    <span>🎁</span>
+                    <span>ðŸŽ</span>
                 </button>
             </form>
         </div>
@@ -699,7 +697,7 @@ input, select{ font-family:inherit; }
 
 <footer class="footer">
     <div id="footer-month"></div>
-    <div>© <span id="footer-year"></span> ماہانہ لکی ڈرا — تمام حقوق محفوظ ہیں۔</div>
+    <div>Â© <span id="footer-year"></span> Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§ â€” ØªÙ…Ø§Ù… Ø­Ù‚ÙˆÙ‚ Ù…Ø­ÙÙˆØ¸ ÛÛŒÚºÛ”</div>
 </footer>
 
 <!-- ==========================================================================
@@ -707,14 +705,14 @@ input, select{ font-family:inherit; }
      ========================================================================== -->
 <div class="success-overlay" id="success-overlay">
     <div class="success-card">
-        <div class="success-icon">✓</div>
-        <div class="success-title">🎉 رجسٹریشن کامیاب!</div>
-        <p class="success-body">آپ کی معلومات کامیابی سے درج کر لی گئی ہیں۔ واٹس ایپ کھولا جا رہا ہے، براہ کرم وہاں موجود پیغام کو خود Send کریں۔</p>
+        <div class="success-icon">âœ“</div>
+        <div class="success-title">ðŸŽ‰ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ú©Ø§Ù…ÛŒØ§Ø¨!</div>
+        <p class="success-body">Ø¢Ù¾ Ú©ÛŒ Ù…Ø¹Ù„ÙˆÙ…Ø§Øª Ú©Ø§Ù…ÛŒØ§Ø¨ÛŒ Ø³Û’ Ø¯Ø±Ø¬ Ú©Ø± Ù„ÛŒ Ú¯Ø¦ÛŒ ÛÛŒÚºÛ” ÙˆØ§Ù¹Ø³ Ø§ÛŒÙ¾ Ú©Ú¾ÙˆÙ„Ø§ Ø¬Ø§ Ø±ÛØ§ ÛÛ’ØŒ Ø¨Ø±Ø§Û Ú©Ø±Ù… ÙˆÛØ§Úº Ù…ÙˆØ¬ÙˆØ¯ Ù¾ÛŒØºØ§Ù… Ú©Ùˆ Ø®ÙˆØ¯ Send Ú©Ø±ÛŒÚºÛ”</p>
         <a href="#" id="whatsapp-link" class="btn-whatsapp" target="_blank" rel="noopener">
-            <span>💬</span>
-            <span>واٹس ایپ کھولیں</span>
+            <span>ðŸ’¬</span>
+            <span>ÙˆØ§Ù¹Ø³ Ø§ÛŒÙ¾ Ú©Ú¾ÙˆÙ„ÛŒÚº</span>
         </a>
-        <button type="button" class="btn-close-success" id="close-success">بند کریں</button>
+        <button type="button" class="btn-close-success" id="close-success">Ø¨Ù†Ø¯ Ú©Ø±ÛŒÚº</button>
     </div>
 </div>
 
@@ -727,24 +725,24 @@ input, select{ font-family:inherit; }
     /* =====================================================================
        0. RENDER CONFIG-DRIVEN CONTENT
        (Everything in this file reads from LUCKY_DRAW_CONFIG in config.js.
-        To change monthly content, edit config.js — not this file.)
+        To change monthly content, edit config.js â€” not this file.)
        ===================================================================== */
 
     var cfg = (typeof LUCKY_DRAW_CONFIG !== "undefined") ? LUCKY_DRAW_CONFIG : null;
 
     if(!cfg){
-        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#fff;">config.js لوڈ نہیں ہو سکی۔ براہ کرم چیک کریں کہ فائل موجود ہے۔</div>';
+        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#fff;">config.js Ù„ÙˆÚˆ Ù†ÛÛŒÚº ÛÙˆ Ø³Ú©ÛŒÛ” Ø¨Ø±Ø§Û Ú©Ø±Ù… Ú†ÛŒÚ© Ú©Ø±ÛŒÚº Ú©Û ÙØ§Ø¦Ù„ Ù…ÙˆØ¬ÙˆØ¯ ÛÛ’Û”</div>';
         return;
     }
 
     // --- Hero text ---
-    document.getElementById("hero-eyebrow").textContent = cfg.title || "ماہانہ لکی ڈرا";
-    document.getElementById("hero-title").textContent = cfg.title || "ماہانہ لکی ڈرا";
+    document.getElementById("hero-eyebrow").textContent = cfg.title || "Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§";
+    document.getElementById("hero-title").textContent = cfg.title || "Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§";
     document.getElementById("hero-subtitle").textContent = cfg.subtitle || "";
-    document.getElementById("hero-month").textContent = "🗓️ " + (cfg.monthName || "");
-    document.getElementById("footer-month").textContent = (cfg.monthName || "") + " کی خصوصی مہم";
+    document.getElementById("hero-month").textContent = "ðŸ—“ï¸ " + (cfg.monthName || "");
+    document.getElementById("footer-month").textContent = (cfg.monthName || "") + " Ú©ÛŒ Ø®ØµÙˆØµÛŒ Ù…ÛÙ…";
     document.getElementById("footer-year").textContent = new Date().getFullYear();
-    document.getElementById("draw-date-text").textContent = cfg.drawDate || "جلد اعلان کیا جائے گا";
+    document.getElementById("draw-date-text").textContent = cfg.drawDate || "Ø¬Ù„Ø¯ Ø§Ø¹Ù„Ø§Ù† Ú©ÛŒØ§ Ø¬Ø§Ø¦Û’ Ú¯Ø§";
 
     // --- Registration status (hero + form) ---
     var heroStatus = document.getElementById("hero-status");
@@ -755,12 +753,12 @@ input, select{ font-family:inherit; }
 
     if(cfg.registrationOpen){
         heroStatus.classList.add("open");
-        heroStatusText.textContent = "رجسٹریشن شروع ہو چکی ہے!";
+        heroStatusText.textContent = "Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ø´Ø±ÙˆØ¹ ÛÙˆ Ú†Ú©ÛŒ ÛÛ’!";
         formEl.style.display = "";
         formClosedEl.style.display = "none";
     }else{
         heroStatus.classList.add("closed");
-        heroStatusText.textContent = "اس ماہ کی رجسٹریشن فی الحال بند ہے";
+        heroStatusText.textContent = "Ø§Ø³ Ù…Ø§Û Ú©ÛŒ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† ÙÛŒ Ø§Ù„Ø­Ø§Ù„ Ø¨Ù†Ø¯ ÛÛ’";
         heroCtaBtn.style.display = "none";
         formEl.style.display = "none";
         formClosedEl.style.display = "block";
@@ -771,7 +769,7 @@ input, select{ font-family:inherit; }
     var rewards = Array.isArray(cfg.rewards) ? cfg.rewards : [];
 
     if(rewards.length === 0){
-        rewardsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.5);font-size:14px;">اس ماہ کے انعامات جلد شامل کیے جائیں گے۔</p>';
+        rewardsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.5);font-size:14px;">Ø§Ø³ Ù…Ø§Û Ú©Û’ Ø§Ù†Ø¹Ø§Ù…Ø§Øª Ø¬Ù„Ø¯ Ø´Ø§Ù…Ù„ Ú©ÛŒÛ’ Ø¬Ø§Ø¦ÛŒÚº Ú¯Û’Û”</p>';
     }else{
         rewards.forEach(function(reward){
             var card = document.createElement("div");
@@ -783,21 +781,21 @@ input, select{ font-family:inherit; }
             if(reward.image && String(reward.image).trim() !== ""){
                 var img = document.createElement("img");
                 img.src = reward.image;
-                img.alt = reward.name || "انعام";
+                img.alt = reward.name || "Ø§Ù†Ø¹Ø§Ù…";
                 img.loading = "lazy";
                 // If the configured image fails to load, fall back to the gift icon
                 img.onerror = function(){
                     media.innerHTML = "";
-                    media.textContent = "🎁";
+                    media.textContent = "ðŸŽ";
                 };
                 media.appendChild(img);
             }else{
-                media.textContent = "🎁";
+                media.textContent = "ðŸŽ";
             }
 
             var name = document.createElement("div");
             name.className = "reward-name";
-            name.textContent = reward.name || "انعام";
+            name.textContent = reward.name || "Ø§Ù†Ø¹Ø§Ù…";
 
             card.appendChild(media);
             card.appendChild(name);
@@ -813,185 +811,17 @@ input, select{ font-family:inherit; }
         });
     }
 
-    // Stop here if registration is closed — no need to wire up the form/city API.
+    // Stop here if registration is closed â€” no need to wire up the form/city API.
     if(!cfg.registrationOpen){
         return;
     }
 
     /* =====================================================================
-       1. CITY LIST — PostEx API with automatic fallback
+       1. CITY FIELD â€” plain manual text entry (no API)
        ===================================================================== */
 
     var cityInput = document.getElementById("input-city");
-    var cityDropdown = document.getElementById("city-dropdown");
-    var cityStatus = document.getElementById("city-status");
     var fieldCity = document.getElementById("field-city");
-
-    var allCities = [];          // populated only from the live PostEx API
-    var selectedCity = "";       // must match an entry in allCities exactly
-    var citiesReady = false;     // true once we have a usable list from the API
-    var citiesSettled = false;   // guards against double-handling
-
-    // How long we wait for the PostEx API before showing a failure state.
-    // This is the fix for "loading... forever": some CORS failures never
-    // fire a normal fetch error in certain browsers, so a timer is the
-    // only reliable way to guarantee the status always updates.
-    var API_TIMEOUT_MS = 8000;
-
-    function showCityLoadFailed(){
-        if(citiesSettled) return;
-        citiesSettled = true;
-
-        citiesReady = false;
-        allCities = [];
-        cityStatus.classList.remove("loading");
-        cityStatus.innerHTML = '⚠️ Could not load the city list from PostEx API. <button type="button" id="retry-cities-btn" style="background:none;border:none;padding:0;color:#c2410c;font-weight:700;text-decoration:underline;cursor:pointer;font-size:inherit;">Retry</button>';
-        var retryBtn = document.getElementById("retry-cities-btn");
-        if(retryBtn){
-            retryBtn.addEventListener("click", function(){
-                citiesSettled = false;
-                loadCitiesFromAPI();
-            });
-        }
-        if(cityDropdown.classList.contains("open")){
-            renderCityOptions(cityInput.value);
-        }
-    }
-
-    function useLiveCities(names){
-        if(citiesSettled) return; // API resolved after the timeout already fired — ignore late data
-        citiesSettled = true;
-
-        allCities = names;
-        citiesReady = true;
-        cityStatus.classList.remove("loading");
-        cityStatus.textContent = "✓ " + names.length + " cities loaded from PostEx.";
-        if(cityDropdown.classList.contains("open")){
-            renderCityOptions(cityInput.value);
-        }
-    }
-
-    function loadCitiesFromAPI(){
-        cityStatus.classList.remove("loading");
-        cityStatus.classList.add("loading");
-        cityStatus.textContent = "Loading city list from PostEx...";
-
-        // Hard safety net: no matter what happens to the fetch below
-        // (hangs, silent CORS failures, slow network), we guarantee the
-        // status updates within API_TIMEOUT_MS instead of loading forever.
-        var timeoutId = setTimeout(function(){
-            console.warn("PostEx city API timed out after " + API_TIMEOUT_MS + "ms.");
-            showCityLoadFailed();
-        }, API_TIMEOUT_MS);
-
-        // NOTE (static-site limitation): This calls the PostEx API directly
-        // from the browser, as required for a backend-free static site.
-        // In practice, most merchant/logistics APIs (including PostEx) are
-        // built for server-to-server use and block direct browser requests
-        // via CORS. If that happens, the browser refuses the request before
-        // any response reaches this code — the timeout above is what
-        // recovers from that and shows a clear failure state (per your
-        // request, there is no fallback city list — the real API status
-        // is always shown honestly).
-        if(typeof POSTEX_API_TOKEN === "undefined" || !POSTEX_API_TOKEN || POSTEX_API_TOKEN === "YOUR_POSTEX_API_TOKEN"){
-            clearTimeout(timeoutId);
-            console.warn("POSTEX_API_TOKEN is not configured in config.js.");
-            showCityLoadFailed();
-            return;
-        }
-
-        fetch(POSTEX_API_URL, {
-            method: "GET",
-            headers: {
-                "token": POSTEX_API_TOKEN
-            }
-        })
-        .then(function(res){
-            if(!res.ok){ throw new Error("PostEx API returned status " + res.status); }
-            return res.json();
-        })
-        .then(function(data){
-            var list = (data && data.dist) ? data.dist : (data && data.data ? data.data : data);
-            if(!Array.isArray(list)){ throw new Error("Unexpected PostEx API response shape"); }
-
-            var names = list
-                .filter(function(c){ return c && (c.isDeliveryCity === true || c.isDeliveryCity === "true"); })
-                .map(function(c){ return c.operationalCityName; })
-                .filter(function(n){ return !!n; });
-
-            if(names.length === 0){ throw new Error("No delivery cities in PostEx response"); }
-
-            clearTimeout(timeoutId);
-            useLiveCities(names);
-        })
-        .catch(function(err){
-            console.warn("PostEx city API failed.", err);
-            clearTimeout(timeoutId);
-            showCityLoadFailed();
-        });
-    }
-
-    try{
-        loadCitiesFromAPI();
-    }catch(err){
-        // Guarantees a synchronous error here (e.g. malformed URL) can
-        // never stop the rest of this script — including form validation
-        // and WhatsApp submission further below — from running.
-        console.warn("City loading failed unexpectedly.", err);
-        showCityLoadFailed();
-    }
-
-    function renderCityOptions(query){
-        var q = (query || "").trim().toLowerCase();
-        var matches = allCities.filter(function(c){
-            return c.toLowerCase().indexOf(q) !== -1;
-        });
-
-        cityDropdown.innerHTML = "";
-
-        if(!citiesReady){
-            var notReady = document.createElement("div");
-            notReady.className = "city-empty";
-            notReady.textContent = "City list not loaded yet.";
-            cityDropdown.appendChild(notReady);
-            cityDropdown.classList.add("open");
-            return;
-        }
-
-        if(matches.length === 0){
-            var empty = document.createElement("div");
-            empty.className = "city-empty";
-            empty.textContent = "No matching city found.";
-            cityDropdown.appendChild(empty);
-        }else{
-            matches.slice(0, 40).forEach(function(city){
-                var opt = document.createElement("div");
-                opt.className = "city-option";
-                opt.textContent = city;
-                opt.addEventListener("click", function(){
-                    selectedCity = city;
-                    cityInput.value = city;
-                    cityDropdown.classList.remove("open");
-                    clearFieldError(fieldCity);
-                });
-                cityDropdown.appendChild(opt);
-            });
-        }
-        cityDropdown.classList.add("open");
-    }
-
-    cityInput.addEventListener("focus", function(){
-        renderCityOptions(cityInput.value);
-    });
-    cityInput.addEventListener("input", function(){
-        selectedCity = ""; // typing invalidates a previous exact selection
-        renderCityOptions(cityInput.value);
-    });
-    document.addEventListener("click", function(e){
-        if(!fieldCity.contains(e.target)){
-            cityDropdown.classList.remove("open");
-        }
-    });
 
     /* =====================================================================
        2. VALIDATION
@@ -1017,6 +847,13 @@ input, select{ font-family:inherit; }
     var inputEmergency = document.getElementById("input-emergency");
     var inputAddress = document.getElementById("input-address");
     var inputTerms = document.getElementById("input-terms");
+
+    // City is a normal free-text field; no API, dropdown, token, or city list.
+    cityInput.addEventListener("input", function(){
+        if(cityInput.value.trim().length >= 2){
+            clearFieldError(fieldCity);
+        }
+    });
 
     // Keep mobile fields numeric-only for convenience
     [inputMobile, inputEmergency].forEach(function(el){
@@ -1045,13 +882,11 @@ input, select{ font-family:inherit; }
             showFieldError(fieldEmergency); valid = false;
         }else{ clearFieldError(fieldEmergency); }
 
-        // City — must be an exact match from the loaded list
+        // City â€” plain free-text entry (no API/list required)
         var cityTyped = cityInput.value.trim();
-        var cityMatchesList = allCities.some(function(c){ return c === cityTyped; });
-        if(!cityMatchesList){
+        if(cityTyped.length < 2){
             showFieldError(fieldCity); valid = false;
         }else{
-            selectedCity = cityTyped;
             clearFieldError(fieldCity);
         }
 
@@ -1083,19 +918,19 @@ input, select{ font-family:inherit; }
 
     function buildWhatsAppMessage(){
         var lines = [
-            "🎁 نئی ماہانہ لکی ڈرا رجسٹریشن",
+            "ðŸŽ Ù†Ø¦ÛŒ Ù…Ø§ÛØ§Ù†Û Ù„Ú©ÛŒ ÚˆØ±Ø§ Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù†",
             "",
-            "نام: " + inputName.value.trim(),
-            "موبائل نمبر: " + inputMobile.value.trim(),
-            "ایمرجنسی / متبادل نمبر: " + inputEmergency.value.trim(),
-            "شہر: " + selectedCity,
+            "Ù†Ø§Ù…: " + inputName.value.trim(),
+            "Ù…ÙˆØ¨Ø§Ø¦Ù„ Ù†Ù…Ø¨Ø±: " + inputMobile.value.trim(),
+            "Ø§ÛŒÙ…Ø±Ø¬Ù†Ø³ÛŒ / Ù…ØªØ¨Ø§Ø¯Ù„ Ù†Ù…Ø¨Ø±: " + inputEmergency.value.trim(),
+            "Ø´ÛØ±: " + cityInput.value.trim(),
             "",
-            "مکمل پتہ:",
+            "Ù…Ú©Ù…Ù„ Ù¾ØªÛ:",
             inputAddress.value.trim(),
             "",
-            "ماہ: " + (cfg.monthName || ""),
+            "Ù…Ø§Û: " + (cfg.monthName || ""),
             "",
-            "رجسٹریشن کامیابی سے مکمل کی گئی ہے۔"
+            "Ø±Ø¬Ø³Ù¹Ø±ÛŒØ´Ù† Ú©Ø§Ù…ÛŒØ§Ø¨ÛŒ Ø³Û’ Ù…Ú©Ù…Ù„ Ú©ÛŒ Ú¯Ø¦ÛŒ ÛÛ’Û”"
         ];
         return lines.join("\n");
     }
