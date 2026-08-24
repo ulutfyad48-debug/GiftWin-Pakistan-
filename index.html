@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ماہانہ لکی ڈرا رجسٹریشن</title>
+<meta name="description" content="ماہانہ لکی ڈرا میں مفت رجسٹریشن کریں اور خصوصی انعامات جیتنے کا موقع حاصل کریں۔">
+
+<style>
+/* ==========================================================================
+   DESIGN TOKENS
+   ========================================================================== */
+:root{
+    --navy-deep:      #0a1330;
+    --navy:           #0f1a3d;
+    --navy-soft:      #16224f;
+    --gold:           #f2c14e;
+    --gold-soft:      #f9dd8b;
+    --white:          #ffffff;
+    --paper:          #fbf9f4;
+    --cta:            #ff5b35;
+    --cta-dark:       #e0431f;
+    --ink:            #14183a;
+    --ink-soft:       #565d82;
+    --line:           rgba(242,193,78,0.18);
+    --shadow-lg:      0 24px 60px -20px rgba(4,8,28,0.55);
+    --shadow-sm:      0 8px 20px -10px rgba(4,8,28,0.35);
+    --radius-lg:      26px;
+    --radius-md:      18px;
+    --radius-sm:      12px;
+    --font-display:   'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', serif;
+    --font-ui:        'Noto Sans Arabic', 'Segoe UI', Tahoma, sans-serif;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; }
+
+body{
+    background:
+        radial-gradient(1200px 600px at 15% -10%, rgba(242,193,78,0.10), transparent 60%),
+        radial-gradient(900px 500px at 110% 10%, rgba(255,91,53,0.10), transparent 55%),
+        var(--navy-deep);
+    color:var(--white);
+    font-family:var(--font-ui);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    min-height:100vh;
+}
+
+img{ max-width:100%; display:block; }
+button{ font-family:inherit; cursor:pointer; border:none; }
+input, select{ font-family:inherit; }
+
+.wrap{ max-width:640px; margin:0 auto; padding:0 20px; }
+
+.visually-hidden{
+    position:absolute; width:1px; height:1px; overflow:hidden;
+    clip:rect(0 0 0 0); white-space:nowrap;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+}
+
+/* ==========================================================================
+   CONFETTI CANVAS (ambient, behind hero)
+   ========================================================================== */
+#confetti-canvas{
+    position:absolute; top:0; left:0; width:100%; height:100%;
+    pointer-events:none; z-index:1;
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero{
+    position:relative;
+    padding:56px 0 46px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+}
+
+.hero-badge{
+    position:relative; z-index:2;
+    display:inline-flex; align-items:center; gap:8px;
+    background:rgba(242,193,78,0.12);
+    border:1px solid rgba(242,193,78,0.35);
+    color:var(--gold-soft);
+    font-size:13px; font-weight:600;
+    padding:7px 16px;
+    border-radius:999px;
+    letter-spacing:0.3px;
+}
+
+.hero-month{
+    position:relative; z-index:2;
+    margin-top:18px;
+    font-size:15px;
+    color:var(--gold);
+    font-weight:600;
+}
+
+.hero-title{
+    position:relative; z-index:2;
+    font-family:var(--font-display);
+    font-size:44px;
+    line-height:1.35;
+    margin-top:10px;
+    background:linear-gradient(180deg, #ffffff 0%, var(--gold-soft) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    font-weight:700;
+}
+
+.hero-subtitle{
+    position:relative; z-index:2;
+    margin-top:14px;
+    font-size:17px;
+    line-height:1.9;
+    color:rgba(255,255,255,0.86);
+    max-width:520px;
+}
+
+.hero-status{
+    position:relative; z-index:2;
+    margin-top:22px;
+    display:inline-flex; align-items:center; gap:10px;
+    padding:12px 18px;
+    border-radius:var(--radius-sm);
+    font-size:15px;
+    font-weight:600;
+}
+.hero-status.open{
+    background:rgba(60,200,140,0.12);
+    border:1px solid rgba(60,200,140,0.4);
+    color:#7be3b6;
+}
+.hero-status.closed{
+    background:rgba(255,91,53,0.10);
+    border:1px solid rgba(255,91,53,0.35);
+    color:#ffb199;
+}
+.hero-status .dot{
+    width:8px; height:8px; border-radius:50%; background:currentColor;
+    box-shadow:0 0 0 4px currentColor; opacity:0.9;
+}
+
+.hero-cta{
+    position:relative; z-index:2;
+    margin-top:26px;
+}
+
+/* ==========================================================================
+   DRAW DATE STRIP
+   ========================================================================== */
+.date-strip{
+    position:relative; z-index:2;
+    margin-top:26px;
+    display:flex; align-items:center; gap:14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:16px 18px;
+}
+.date-strip .icon{
+    flex-shrink:0;
+    width:42px; height:42px;
+    border-radius:12px;
+    background:linear-gradient(145deg, var(--gold), var(--gold-soft));
+    display:flex; align-items:center; justify-content:center;
+    font-size:20px;
+}
+.date-strip .text-label{ font-size:13px; color:var(--ink-soft); color:rgba(255,255,255,0.55); }
+.date-strip .text-value{ font-size:17px; font-weight:700; color:var(--white); margin-top:2px; }
+
+/* ==========================================================================
+   SECTION HEADERS
+   ========================================================================== */
+.section{ padding:52px 0; position:relative; }
+.section-header{ text-align:center; margin-bottom:32px; }
+.section-eyebrow{
+    display:inline-block;
+    font-size:13px; font-weight:700;
+    color:var(--gold);
+    letter-spacing:0.4px;
+    margin-bottom:10px;
+}
+.section-title{
+    font-family:var(--font-display);
+    font-size:30px;
+    color:var(--white);
+    font-weight:700;
+    line-height:1.5;
+}
+.section-sub{
+    margin-top:10px;
+    font-size:15px;
+    color:rgba(255,255,255,0.6);
+    line-height:1.8;
+}
+
+/* ==========================================================================
+   REWARDS GRID
+   ========================================================================== */
+.rewards-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:16px;
+}
+@media (max-width:380px){
+    .rewards-grid{ grid-template-columns:1fr; }
+}
+
+.reward-card{
+    background:var(--white);
+    border-radius:var(--radius-md);
+    padding:20px 16px;
+    text-align:center;
+    box-shadow:var(--shadow-sm);
+    position:relative;
+    overflow:hidden;
+    transition:transform 0.25s ease, box-shadow 0.25s ease;
+}
+.reward-card::before{
+    content:"";
+    position:absolute; inset:0 0 auto 0; height:4px;
+    background:linear-gradient(90deg, var(--gold), var(--cta));
+}
+.reward-card:active{ transform:scale(0.98); }
+
+.reward-media{
+    width:64px; height:64px;
+    margin:6px auto 14px;
+    border-radius:16px;
+    background:linear-gradient(160deg, #fff5db, #fce6b0);
+    display:flex; align-items:center; justify-content:center;
+    font-size:30px;
+    overflow:hidden;
+}
+.reward-media img{ width:100%; height:100%; object-fit:cover; }
+
+.reward-name{
+    font-size:15px;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.5;
+}
+.reward-desc{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:5px;
+    line-height:1.6;
+}
+
+/* ==========================================================================
+   NOTICE BOX
+   ========================================================================== */
+.notice{
+    background:rgba(242,193,78,0.08);
+    border:1px solid rgba(242,193,78,0.3);
+    border-radius:var(--radius-md);
+    padding:20px 18px;
+}
+.notice-title{
+    font-size:16px; font-weight:700;
+    color:var(--gold-soft);
+    display:flex; align-items:center; gap:8px;
+    margin-bottom:12px;
+}
+.notice ul{
+    list-style:none;
+    display:flex; flex-direction:column; gap:10px;
+}
+.notice li{
+    font-size:14px;
+    line-height:1.9;
+    color:rgba(255,255,255,0.82);
+    display:flex; align-items:flex-start; gap:8px;
+}
+.notice li::before{
+    content:"◆";
+    color:var(--gold);
+    font-size:9px;
+    margin-top:7px;
+    flex-shrink:0;
+}
+
+/* ==========================================================================
+   FORM CARD
+   ========================================================================== */
+.form-card{
+    background:var(--paper);
+    border-radius:var(--radius-lg);
+    padding:28px 22px 26px;
+    box-shadow:var(--shadow-lg);
+    color:var(--ink);
+}
+
+.form-closed{
+    text-align:center;
+    padding:20px 6px;
+}
+.form-closed .icon{ font-size:44px; margin-bottom:14px; }
+.form-closed .headline{
+    font-size:19px; font-weight:700; color:var(--ink);
+    margin-bottom:10px;
+}
+.form-closed .body-text{
+    font-size:14.5px; color:var(--ink-soft); line-height:1.9;
+}
+
+.field{ margin-bottom:20px; position:relative; }
+.field label{
+    display:block;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--ink);
+    margin-bottom:8px;
+}
+.field .required-mark{ color:var(--cta); margin-right:3px; }
+
+.field input[type="text"],
+.field input[type="tel"],
+.field textarea{
+    width:100%;
+    padding:15px 16px;
+    font-size:16px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid #e3ddca;
+    background:var(--white);
+    color:var(--ink);
+    transition:border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.field input:focus,
+.field textarea:focus,
+.field .city-input:focus{
+    outline:none;
+    border-color:var(--gold);
+    box-shadow:0 0 0 4px rgba(242,193,78,0.18);
+}
+.field textarea{ min-height:96px; resize:vertical; line-height:1.7; }
+
+.field .hint{
+    font-size:12.5px; color:var(--ink-soft); margin-top:6px;
+}
+.field .error-msg{
+    display:none;
+    font-size:13px;
+    color:var(--cta-dark);
+    margin-top:7px;
+    font-weight:600;
+    align-items:center; gap:6px;
+}
+.field.has-error input,
+.field.has-error textarea,
+.field.has-error .city-input{
+    border-color:var(--cta);
+    box-shadow:0 0 0 4px rgba(255,91,53,0.14);
+}
+.field.has-error .error-msg{ display:flex; }
+
+/* City search */
+.city-field{ position:relative; }
+.city-input{
+    width:100%;
+    padding:15px 16px;
+    font-size:16px;
+    border-radius:var(--radius-sm);
+    border:1.5px solid #e3ddca;
+    background:var(--white);
+    color:var(--ink);
+}
+.city-status{
+    font-size:12.5px;
+    margin-top:6px;
+    color:var(--ink-soft);
+    display:flex; align-items:center; gap:6px;
+}
+.city-status.loading::before{
+    content:"";
+    width:12px; height:12px;
+    border-radius:50%;
+    border:2px solid #d8d2bb;
+    border-top-color:var(--gold);
+    animation:spin 0.7s linear infinite;
+    flex-shrink:0;
+}
+@keyframes spin{ to{ transform:rotate(360deg); } }
+
+.city-dropdown{
+    position:absolute;
+    top:calc(100% + 6px);
+    right:0; left:0;
+    background:var(--white);
+    border:1.5px solid #e3ddca;
+    border-radius:var(--radius-sm);
+    box-shadow:var(--shadow-lg);
+    max-height:220px;
+    overflow-y:auto;
+    z-index:20;
+    display:none;
+}
+.city-dropdown.open{ display:block; }
+.city-option{
+    padding:13px 16px;
+    font-size:15px;
+    color:var(--ink);
+    cursor:pointer;
+    border-bottom:1px solid #f0ece0;
+}
+.city-option:last-child{ border-bottom:none; }
+.city-option:hover, .city-option.active{ background:#fdf6e3; }
+.city-empty{
+    padding:16px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-align:center;
+}
+
+/* Checkbox */
+.checkbox-field{
+    display:flex; align-items:flex-start; gap:12px;
+    background:rgba(242,193,78,0.10);
+    border:1px solid rgba(242,193,78,0.3);
+    border-radius:var(--radius-sm);
+    padding:16px;
+    margin-bottom:22px;
+}
+.checkbox-field input[type="checkbox"]{
+    width:22px; height:22px;
+    flex-shrink:0;
+    margin-top:2px;
+    accent-color:var(--cta);
+}
+.checkbox-field label{
+    font-size:13.5px;
+    line-height:1.9;
+    color:var(--ink);
+    font-weight:600;
+}
+
+/* Submit button */
+.btn-submit{
+    width:100%;
+    padding:18px;
+    font-size:17px;
+    font-weight:700;
+    color:var(--white);
+    background:linear-gradient(135deg, var(--cta), var(--cta-dark));
+    border-radius:16px;
+    box-shadow:0 14px 30px -10px rgba(255,91,53,0.55);
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    transition:transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn-submit:active{ transform:scale(0.98); }
+.btn-submit:disabled{
+    opacity:0.6;
+    box-shadow:none;
+}
+
+.btn-hero{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 28px;
+    font-size:16px; font-weight:700;
+    color:var(--navy-deep);
+    background:linear-gradient(135deg, var(--gold), var(--gold-soft));
+    border-radius:16px;
+    box-shadow:0 14px 30px -10px rgba(242,193,78,0.55);
+}
+
+/* Success overlay */
+.success-overlay{
+    position:fixed; inset:0;
+    background:rgba(6,10,28,0.82);
+    backdrop-filter:blur(6px);
+    display:none;
+    align-items:center; justify-content:center;
+    z-index:100;
+    padding:20px;
+}
+.success-overlay.open{ display:flex; }
+.success-card{
+    background:var(--paper);
+    border-radius:var(--radius-lg);
+    padding:36px 26px;
+    text-align:center;
+    max-width:400px;
+    width:100%;
+    box-shadow:var(--shadow-lg);
+    animation:pop-in 0.35s ease;
+}
+@keyframes pop-in{
+    from{ opacity:0; transform:scale(0.9) translateY(10px); }
+    to{ opacity:1; transform:scale(1) translateY(0); }
+}
+.success-icon{
+    width:72px; height:72px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    background:linear-gradient(135deg, #3cc88c, #2ea36f);
+    display:flex; align-items:center; justify-content:center;
+    font-size:34px;
+    color:var(--white);
+}
+.success-title{ font-size:20px; font-weight:800; color:var(--ink); margin-bottom:10px; }
+.success-body{ font-size:14.5px; color:var(--ink-soft); line-height:1.9; margin-bottom:22px; }
+.btn-whatsapp{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    width:100%;
+    padding:16px;
+    font-size:15.5px; font-weight:700;
+    color:var(--white);
+    background:#25D366;
+    border-radius:14px;
+}
+.btn-close-success{
+    margin-top:14px;
+    font-size:13.5px;
+    color:var(--ink-soft);
+    text-decoration:underline;
+    background:none;
+    width:100%;
+    padding:8px;
+}
+
+/* Footer */
+.footer{
+    text-align:center;
+    padding:34px 20px 44px;
+    font-size:12.5px;
+    color:rgba(255,255,255,0.4);
+    line-height:1.9;
+}
+
+/* Gift/decorative icons */
+.decor-row{
+    display:flex; justify-content:center; gap:14px;
+    margin-top:22px;
+    position:relative; z-index:2;
+}
+.decor-chip{
+    font-size:22px;
+    background:rgba(255,255,255,0.06);
+    border:1px solid var(--line);
+    width:46px; height:46px;
+    border-radius:14px;
+    display:flex; align-items:center; justify-content:center;
+}
+
+@media (min-width:520px){
+    .hero-title{ font-size:52px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ==========================================================================
+     HERO
+     ========================================================================== -->
+<section class="hero">
+    <canvas id="confetti-canvas"></canvas>
+    <div class="wrap">
+        <span class="hero-badge">🎁 <span id="hero-eyebrow">ماہانہ لکی ڈرا</span></span>
+        <div class="hero-month" id="hero-month"></div>
+        <h1 class="hero-title" id="hero-title"></h1>
+        <p class="hero-subtitle" id="hero-subtitle"></p>
+
+        <div class="hero-status" id="hero-status">
+            <span class="dot"></span>
+            <span id="hero-status-text"></span>
+        </div>
+
+        <div class="hero-cta">
+            <a href="#register" class="btn-hero" id="hero-cta-btn">
+                <span>ابھی رجسٹر کریں</span>
+                <span>←</span>
+            </a>
+        </div>
+
+        <div class="date-strip">
+            <div class="icon">📅</div>
+            <div>
+                <div class="text-label">قرعہ اندازی / گفٹ ڈسپیچ کی تاریخ</div>
+                <div class="text-value" id="draw-date-text"></div>
+            </div>
+        </div>
+
+        <div class="decor-row">
+            <div class="decor-chip">💻</div>
+            <div class="decor-chip">🎧</div>
+            <div class="decor-chip">⌨️</div>
+            <div class="decor-chip">🎉</div>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     REWARDS
+     ========================================================================== -->
+<section class="section" id="rewards">
+    <div class="wrap">
+        <div class="section-header">
+            <span class="section-eyebrow">انعامات</span>
+            <h2 class="section-title">🎁 اس ماہ کے خصوصی انعامات</h2>
+            <p class="section-sub">ہر ماہ نئے اور دلچسپ انعامات — قرعہ اندازی میں شامل ہوں اور جیتنے کا موقع حاصل کریں۔</p>
+        </div>
+        <div class="rewards-grid" id="rewards-grid"></div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     NOTICE
+     ========================================================================== -->
+<section class="section" style="padding-top:0;">
+    <div class="wrap">
+        <div class="notice">
+            <div class="notice-title">⚠️ اہم معلومات</div>
+            <ul>
+                <li>رجسٹریشن بالکل مفت ہے۔</li>
+                <li>کوئی Entry Fee یا Advance Payment نہیں لی جاتی۔</li>
+                <li>اگر آپ Lucky Draw میں منتخب ہوتے ہیں اور Gift/Parcel بھیجا جاتا ہے تو صرف Delivery Charges پارسل کی Delivery کے وقت رائیڈر کو ادا کرنے ہوں گے۔</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ==========================================================================
+     REGISTRATION FORM
+     ========================================================================== -->
+<section class="section" id="register">
+    <div class="wrap">
+        <div class="section-header">
+            <span class="section-eyebrow">رجسٹریشن</span>
+            <h2 class="section-title">📝 اپنی معلومات درج کریں</h2>
+        </div>
+
+        <div class="form-card">
+
+            <!-- Shown when registration is CLOSED -->
+            <div class="form-closed" id="form-closed" style="display:none;">
+                <div class="icon">🔒</div>
+                <div class="headline">رجسٹریشن فی الحال بند ہے</div>
+                <p class="body-text">اس ماہ کی رجسٹریشن فی الحال بند ہے۔ اگلے ماہ دوبارہ رجسٹریشن شروع ہوگی۔</p>
+            </div>
+
+            <!-- Shown when registration is OPEN -->
+            <form id="registration-form" novalidate>
+
+                <div class="field" id="field-name">
+                    <label for="input-name">پورا نام <span class="required-mark">*</span></label>
+                    <input type="text" id="input-name" autocomplete="name" placeholder="اپنا پورا نام لکھیں">
+                    <div class="error-msg">⚠️ براہ کرم اپنا پورا نام درج کریں۔</div>
+                </div>
+
+                <div class="field" id="field-mobile">
+                    <label for="input-mobile">موبائل نمبر <span class="required-mark">*</span></label>
+                    <input type="tel" id="input-mobile" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
+                    <div class="hint">فارمیٹ: 03XXXXXXXXX</div>
+                    <div class="error-msg">⚠️ درست موبائل نمبر درج کریں (مثال: 03XXXXXXXXX)۔</div>
+                </div>
+
+                <div class="field" id="field-emergency">
+                    <label for="input-emergency">متبادل / ایمرجنسی نمبر <span class="required-mark">*</span></label>
+                    <input type="tel" id="input-emergency" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
+                    <div class="error-msg">⚠️ ایمرجنسی نمبر، موبائل نمبر سے مختلف ہونا چاہیے۔</div>
+                </div>
+
+                <div class="field city-field" id="field-city">
+                    <label for="input-city">شہر <span class="required-mark">*</span></label>
+                    <input type="text" id="input-city" class="city-input" placeholder="اپنا شہر تلاش کریں..." autocomplete="off">
+                    <div class="city-dropdown" id="city-dropdown"></div>
+                    <div class="city-status" id="city-status">شہروں کی فہرست لوڈ ہو رہی ہے...</div>
+                    <div class="error-msg">⚠️ براہ کرم فہرست میں سے اپنا شہر منتخب کریں۔</div>
+                </div>
+
+                <div class="field" id="field-address">
+                    <label for="input-address">مکمل پتہ <span class="required-mark">*</span></label>
+                    <textarea id="input-address" placeholder="گھر نمبر، گلی، محلہ، علاقہ..."></textarea>
+                    <div class="error-msg">⚠️ براہ کرم اپنا مکمل پتہ درج کریں۔</div>
+                </div>
+
+                <div class="checkbox-field" id="field-terms">
+                    <input type="checkbox" id="input-terms">
+                    <label for="input-terms">میں تصدیق کرتا/کرتی ہوں کہ میری فراہم کردہ معلومات درست ہیں اور میں Lucky Draw کی شرائط کو سمجھتا/سمجھتی ہوں۔</label>
+                </div>
+                <div class="error-msg" id="terms-error" style="display:none; margin-top:-12px; margin-bottom:18px;">⚠️ آگے بڑھنے کے لیے شرائط کو قبول کرنا ضروری ہے۔</div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    <span>رجسٹریشن مکمل کریں</span>
+                    <span>🎁</span>
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div id="footer-month"></div>
+    <div>© <span id="footer-year"></span> ماہانہ لکی ڈرا — تمام حقوق محفوظ ہیں۔</div>
+</footer>
+
+<!-- ==========================================================================
+     SUCCESS OVERLAY
+     ========================================================================== -->
+<div class="success-overlay" id="success-overlay">
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <div class="success-title">🎉 رجسٹریشن کامیاب!</div>
+        <p class="success-body">آپ کی معلومات کامیابی سے درج کر لی گئی ہیں۔ واٹس ایپ کھولا جا رہا ہے، براہ کرم وہاں موجود پیغام کو خود Send کریں۔</p>
+        <a href="#" id="whatsapp-link" class="btn-whatsapp" target="_blank" rel="noopener">
+            <span>💬</span>
+            <span>واٹس ایپ کھولیں</span>
+        </a>
+        <button type="button" class="btn-close-success" id="close-success">بند کریں</button>
+    </div>
+</div>
+
+<!-- Config must load before the main script -->
+<script src="config.js"></script>
+<script>
+(function(){
+    "use strict";
+
+    /* =====================================================================
+       0. RENDER CONFIG-DRIVEN CONTENT
+       (Everything in this file reads from LUCKY_DRAW_CONFIG in config.js.
+        To change monthly content, edit config.js — not this file.)
+       ===================================================================== */
+
+    var cfg = (typeof LUCKY_DRAW_CONFIG !== "undefined") ? LUCKY_DRAW_CONFIG : null;
+
+    if(!cfg){
+        document.body.innerHTML = '<div style="padding:40px;text-align:center;color:#fff;">config.js لوڈ نہیں ہو سکی۔ براہ کرم چیک کریں کہ فائل موجود ہے۔</div>';
+        return;
+    }
+
+    // --- Hero text ---
+    document.getElementById("hero-eyebrow").textContent = cfg.title || "ماہانہ لکی ڈرا";
+    document.getElementById("hero-title").textContent = cfg.title || "ماہانہ لکی ڈرا";
+    document.getElementById("hero-subtitle").textContent = cfg.subtitle || "";
+    document.getElementById("hero-month").textContent = "🗓️ " + (cfg.monthName || "");
+    document.getElementById("footer-month").textContent = (cfg.monthName || "") + " کی خصوصی مہم";
+    document.getElementById("footer-year").textContent = new Date().getFullYear();
+    document.getElementById("draw-date-text").textContent = cfg.drawDate || "جلد اعلان کیا جائے گا";
+
+    // --- Registration status (hero + form) ---
+    var heroStatus = document.getElementById("hero-status");
+    var heroStatusText = document.getElementById("hero-status-text");
+    var heroCtaBtn = document.getElementById("hero-cta-btn");
+    var formEl = document.getElementById("registration-form");
+    var formClosedEl = document.getElementById("form-closed");
+
+    if(cfg.registrationOpen){
+        heroStatus.classList.add("open");
+        heroStatusText.textContent = "رجسٹریشن شروع ہو چکی ہے!";
+        formEl.style.display = "";
+        formClosedEl.style.display = "none";
+    }else{
+        heroStatus.classList.add("closed");
+        heroStatusText.textContent = "اس ماہ کی رجسٹریشن فی الحال بند ہے";
+        heroCtaBtn.style.display = "none";
+        formEl.style.display = "none";
+        formClosedEl.style.display = "block";
+    }
+
+    // --- Rewards grid (fully dynamic, any number of items) ---
+    var rewardsGrid = document.getElementById("rewards-grid");
+    var rewards = Array.isArray(cfg.rewards) ? cfg.rewards : [];
+
+    if(rewards.length === 0){
+        rewardsGrid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:rgba(255,255,255,0.5);font-size:14px;">اس ماہ کے انعامات جلد شامل کیے جائیں گے۔</p>';
+    }else{
+        rewards.forEach(function(reward){
+            var card = document.createElement("div");
+            card.className = "reward-card";
+
+            var media = document.createElement("div");
+            media.className = "reward-media";
+
+            if(reward.image && String(reward.image).trim() !== ""){
+                var img = document.createElement("img");
+                img.src = reward.image;
+                img.alt = reward.name || "انعام";
+                img.loading = "lazy";
+                // If the configured image fails to load, fall back to the gift icon
+                img.onerror = function(){
+                    media.innerHTML = "";
+                    media.textContent = "🎁";
+                };
+                media.appendChild(img);
+            }else{
+                media.textContent = "🎁";
+            }
+
+            var name = document.createElement("div");
+            name.className = "reward-name";
+            name.textContent = reward.name || "انعام";
+
+            card.appendChild(media);
+            card.appendChild(name);
+
+            if(reward.description && String(reward.description).trim() !== ""){
+                var desc = document.createElement("div");
+                desc.className = "reward-desc";
+                desc.textContent = reward.description;
+                card.appendChild(desc);
+            }
+
+            rewardsGrid.appendChild(card);
+        });
+    }
+
+    // Stop here if registration is closed — no need to wire up the form/city API.
+    if(!cfg.registrationOpen){
+        return;
+    }
+
+    /* =====================================================================
+       1. CITY LIST — PostEx API with automatic fallback
+       ===================================================================== */
+
+    var cityInput = document.getElementById("input-city");
+    var cityDropdown = document.getElementById("city-dropdown");
+    var cityStatus = document.getElementById("city-status");
+    var fieldCity = document.getElementById("field-city");
+
+    var allCities = [];          // final list actually used (API or fallback)
+    var selectedCity = "";       // must match an entry in allCities exactly
+    var citiesReady = false;
+
+    function useFallbackCities(reason){
+        var list = (cfg.fallbackCities && cfg.fallbackCities.length) ? cfg.fallbackCities : [];
+        allCities = list.slice();
+        citiesReady = true;
+        if(allCities.length > 0){
+            cityStatus.classList.remove("loading");
+            cityStatus.textContent = "شہروں کی محفوظ شدہ فہرست دستیاب ہے۔";
+        }else{
+            cityStatus.classList.remove("loading");
+            cityStatus.textContent = "⚠️ شہروں کی فہرست دستیاب نہیں، براہ کرم بعد میں کوشش کریں۔";
+        }
+    }
+
+    function loadCitiesFromAPI(){
+        cityStatus.classList.add("loading");
+        cityStatus.textContent = "شہروں کی فہرست لوڈ ہو رہی ہے...";
+
+        // NOTE (static-site limitation): This calls the PostEx API directly
+        // from the browser, as required for a backend-free static site.
+        // If the request fails (CORS block, network issue, invalid token,
+        // API downtime), we catch it below and silently switch to the
+        // fallbackCities list from config.js so the form keeps working.
+        if(typeof POSTEX_API_TOKEN === "undefined" || !POSTEX_API_TOKEN || POSTEX_API_TOKEN === "YOUR_POSTEX_API_TOKEN"){
+            useFallbackCities("no token configured");
+            return;
+        }
+
+        fetch(POSTEX_API_URL, {
+            method: "GET",
+            headers: {
+                "token": POSTEX_API_TOKEN
+            }
+        })
+        .then(function(res){
+            if(!res.ok){ throw new Error("PostEx API returned status " + res.status); }
+            return res.json();
+        })
+        .then(function(data){
+            var list = (data && data.dist) ? data.dist : (data && data.data ? data.data : data);
+            if(!Array.isArray(list)){ throw new Error("Unexpected PostEx API response shape"); }
+
+            var names = list
+                .filter(function(c){ return c && (c.isDeliveryCity === true || c.isDeliveryCity === "true"); })
+                .map(function(c){ return c.operationalCityName; })
+                .filter(function(n){ return !!n; });
+
+            if(names.length === 0){ throw new Error("No delivery cities in PostEx response"); }
+
+            allCities = names;
+            citiesReady = true;
+            cityStatus.classList.remove("loading");
+            cityStatus.textContent = "شہروں کی لائیو فہرست لوڈ ہو گئی ہے۔";
+        })
+        .catch(function(err){
+            // Do not crash, do not show a blank field — fall back gracefully.
+            console.warn("PostEx city API unavailable, using fallback city list.", err);
+            useFallbackCities("api error");
+        });
+    }
+
+    loadCitiesFromAPI();
+
+    function renderCityOptions(query){
+        var q = (query || "").trim().toLowerCase();
+        var matches = allCities.filter(function(c){
+            return c.toLowerCase().indexOf(q) !== -1;
+        });
+
+        cityDropdown.innerHTML = "";
+
+        if(!citiesReady){
+            cityDropdown.classList.remove("open");
+            return;
+        }
+
+        if(matches.length === 0){
+            var empty = document.createElement("div");
+            empty.className = "city-empty";
+            empty.textContent = "کوئی شہر نہیں ملا۔";
+            cityDropdown.appendChild(empty);
+        }else{
+            matches.slice(0, 40).forEach(function(city){
+                var opt = document.createElement("div");
+                opt.className = "city-option";
+                opt.textContent = city;
+                opt.addEventListener("click", function(){
+                    selectedCity = city;
+                    cityInput.value = city;
+                    cityDropdown.classList.remove("open");
+                    clearFieldError(fieldCity);
+                });
+                cityDropdown.appendChild(opt);
+            });
+        }
+        cityDropdown.classList.add("open");
+    }
+
+    cityInput.addEventListener("focus", function(){
+        renderCityOptions(cityInput.value);
+    });
+    cityInput.addEventListener("input", function(){
+        selectedCity = ""; // typing invalidates a previous exact selection
+        renderCityOptions(cityInput.value);
+    });
+    document.addEventListener("click", function(e){
+        if(!fieldCity.contains(e.target)){
+            cityDropdown.classList.remove("open");
+        }
+    });
+
+    /* =====================================================================
+       2. VALIDATION
+       ===================================================================== */
+
+    function showFieldError(fieldEl){ fieldEl.classList.add("has-error"); }
+    function clearFieldError(fieldEl){ fieldEl.classList.remove("has-error"); }
+
+    function isValidPakMobile(v){
+        // Accepts 03XXXXXXXXX (11 digits, starts with 03)
+        return /^03[0-9]{9}$/.test(v.trim());
+    }
+
+    var fieldName = document.getElementById("field-name");
+    var fieldMobile = document.getElementById("field-mobile");
+    var fieldEmergency = document.getElementById("field-emergency");
+    var fieldAddress = document.getElementById("field-address");
+    var fieldTerms = document.getElementById("field-terms");
+    var termsError = document.getElementById("terms-error");
+
+    var inputName = document.getElementById("input-name");
+    var inputMobile = document.getElementById("input-mobile");
+    var inputEmergency = document.getElementById("input-emergency");
+    var inputAddress = document.getElementById("input-address");
+    var inputTerms = document.getElementById("input-terms");
+
+    // Keep mobile fields numeric-only for convenience
+    [inputMobile, inputEmergency].forEach(function(el){
+        el.addEventListener("input", function(){
+            el.value = el.value.replace(/[^0-9]/g, "").slice(0, 11);
+        });
+    });
+
+    function validateForm(){
+        var valid = true;
+
+        // Name
+        if(inputName.value.trim().length < 2){
+            showFieldError(fieldName); valid = false;
+        }else{ clearFieldError(fieldName); }
+
+        // Mobile
+        if(!isValidPakMobile(inputMobile.value)){
+            showFieldError(fieldMobile); valid = false;
+        }else{ clearFieldError(fieldMobile); }
+
+        // Emergency number
+        var emergencyValid = isValidPakMobile(inputEmergency.value) &&
+                              inputEmergency.value.trim() !== inputMobile.value.trim();
+        if(!emergencyValid){
+            showFieldError(fieldEmergency); valid = false;
+        }else{ clearFieldError(fieldEmergency); }
+
+        // City — must be an exact match from the loaded list
+        var cityTyped = cityInput.value.trim();
+        var cityMatchesList = allCities.some(function(c){ return c === cityTyped; });
+        if(!cityMatchesList){
+            showFieldError(fieldCity); valid = false;
+        }else{
+            selectedCity = cityTyped;
+            clearFieldError(fieldCity);
+        }
+
+        // Address
+        if(inputAddress.value.trim().length < 8){
+            showFieldError(fieldAddress); valid = false;
+        }else{ clearFieldError(fieldAddress); }
+
+        // Terms
+        if(!inputTerms.checked){
+            termsError.style.display = "flex";
+            fieldTerms.style.borderColor = "var(--cta)";
+            valid = false;
+        }else{
+            termsError.style.display = "none";
+            fieldTerms.style.borderColor = "rgba(242,193,78,0.3)";
+        }
+
+        return valid;
+    }
+
+    /* =====================================================================
+       3. WHATSAPP MESSAGE + SUBMIT
+       ===================================================================== */
+
+    var successOverlay = document.getElementById("success-overlay");
+    var whatsappLink = document.getElementById("whatsapp-link");
+    var closeSuccessBtn = document.getElementById("close-success");
+
+    function buildWhatsAppMessage(){
+        var lines = [
+            "🎁 نئی ماہانہ لکی ڈرا رجسٹریشن",
+            "",
+            "نام: " + inputName.value.trim(),
+            "موبائل نمبر: " + inputMobile.value.trim(),
+            "ایمرجنسی / متبادل نمبر: " + inputEmergency.value.trim(),
+            "شہر: " + selectedCity,
+            "",
+            "مکمل پتہ:",
+            inputAddress.value.trim(),
+            "",
+            "ماہ: " + (cfg.monthName || ""),
+            "",
+            "رجسٹریشن کامیابی سے مکمل کی گئی ہے۔"
+        ];
+        return lines.join("\n");
+    }
+
+    formEl.addEventListener("submit", function(e){
+        e.preventDefault();
+
+        if(!validateForm()){
+            var firstError = document.querySelector(".has-error, .checkbox-field");
+            if(firstError){ firstError.scrollIntoView({behavior:"smooth", block:"center"}); }
+            return;
+        }
+
+        var message = buildWhatsAppMessage();
+        var number = (cfg.whatsappNumber || "").replace(/[^0-9]/g, "");
+        var url = "https://wa.me/" + number + "?text=" + encodeURIComponent(message);
+
+        whatsappLink.setAttribute("href", url);
+        successOverlay.classList.add("open");
+
+        // Open WhatsApp automatically with the pre-filled message.
+        // The user must still press Send themselves inside WhatsApp.
+        window.open(url, "_blank", "noopener");
+    });
+
+    closeSuccessBtn.addEventListener("click", function(){
+        successOverlay.classList.remove("open");
+    });
+    successOverlay.addEventListener("click", function(e){
+        if(e.target === successOverlay){ successOverlay.classList.remove("open"); }
+    });
+
+    /* =====================================================================
+       4. AMBIENT CONFETTI (lightweight, canvas-based, hero only)
+       ===================================================================== */
+    (function initConfetti(){
+        var canvas = document.getElementById("confetti-canvas");
+        if(!canvas || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+        var ctx = canvas.getContext("2d");
+        var hero = canvas.closest(".hero");
+        var particles = [];
+        var colors = ["#f2c14e", "#ff5b35", "#ffffff", "#f9dd8b"];
+
+        function resize(){
+            canvas.width = hero.offsetWidth;
+            canvas.height = hero.offsetHeight;
+        }
+        resize();
+        window.addEventListener("resize", resize);
+
+        for(var i=0; i<26; i++){
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height - canvas.height,
+                r: 3 + Math.random() * 4,
+                speed: 0.4 + Math.random() * 0.8,
+                drift: (Math.random() - 0.5) * 0.6,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                spin: (Math.random() - 0.5) * 2
+            });
+        }
+
+        function tick(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(function(p){
+                p.y += p.speed;
+                p.x += p.drift;
+                p.rotation += p.spin;
+                if(p.y > canvas.height){ p.y = -10; p.x = Math.random() * canvas.width; }
+
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.fillStyle = p.color;
+                ctx.globalAlpha = 0.55;
+                ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r);
+                ctx.restore();
+            });
+            requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    })();
+
+})();
+</script>
+</body>
+</html>
