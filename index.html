@@ -830,17 +830,44 @@ input, select{ font-family:inherit; }
     var allCities = [];          // final list actually used (API or fallback)
     var selectedCity = "";       // must match an entry in allCities exactly
     var citiesReady = false;
+    var citiesSettled = false;   // guards against the fallback running twice
 
-    function useFallbackCities(reason){
+    // How long we wait for the PostEx API before giving up and using the
+    // fallback list. This is the fix for "loading... forever": some CORS
+    // failures never fire a normal fetch error in certain browsers, so a
+    // timer is the only reliable way to guarantee we always move on.
+    var API_TIMEOUT_MS = 6000;
+
+    function useFallbackCities(){
+        if(citiesSettled) return; // never run this twice
+        citiesSettled = true;
+
         var list = (cfg.fallbackCities && cfg.fallbackCities.length) ? cfg.fallbackCities : [];
         allCities = list.slice();
         citiesReady = true;
+        cityStatus.classList.remove("loading");
         if(allCities.length > 0){
-            cityStatus.classList.remove("loading");
-            cityStatus.textContent = "شہروں کی محفوظ شدہ فہرست دستیاب ہے۔";
+            cityStatus.textContent = "شہروں کی فہرست دستیاب ہے۔";
         }else{
-            cityStatus.classList.remove("loading");
             cityStatus.textContent = "⚠️ شہروں کی فہرست دستیاب نہیں، براہ کرم بعد میں کوشش کریں۔";
+        }
+        // If the dropdown is already open (user clicked in before this
+        // resolved), refresh it now so the list actually appears.
+        if(cityDropdown.classList.contains("open")){
+            renderCityOptions(cityInput.value);
+        }
+    }
+
+    function useLiveCities(names){
+        if(citiesSettled) return; // API resolved after the timeout already fired — ignore late data
+        citiesSettled = true;
+
+        allCities = names;
+        citiesReady = true;
+        cityStatus.classList.remove("loading");
+        cityStatus.textContent = "شہروں کی لائیو فہرست لوڈ ہو گئی ہے۔";
+        if(cityDropdown.classList.contains("open")){
+            renderCityOptions(cityInput.value);
         }
     }
 
@@ -848,13 +875,24 @@ input, select{ font-family:inherit; }
         cityStatus.classList.add("loading");
         cityStatus.textContent = "شہروں کی فہرست لوڈ ہو رہی ہے...";
 
+        // Hard safety net: no matter what happens to the fetch below
+        // (hangs, silent CORS failures, slow network), we guarantee the
+        // form becomes usable within API_TIMEOUT_MS.
+        var timeoutId = setTimeout(function(){
+            console.warn("PostEx city API timed out after " + API_TIMEOUT_MS + "ms, using fallback city list.");
+            useFallbackCities();
+        }, API_TIMEOUT_MS);
+
         // NOTE (static-site limitation): This calls the PostEx API directly
         // from the browser, as required for a backend-free static site.
-        // If the request fails (CORS block, network issue, invalid token,
-        // API downtime), we catch it below and silently switch to the
-        // fallbackCities list from config.js so the form keeps working.
+        // In practice, most merchant/logistics APIs (including PostEx) are
+        // built for server-to-server use and block direct browser requests
+        // via CORS. If that happens here, the browser will refuse the
+        // request before any response is seen by this code — the timeout
+        // above (and/or the .catch() below) is what recovers from that.
         if(typeof POSTEX_API_TOKEN === "undefined" || !POSTEX_API_TOKEN || POSTEX_API_TOKEN === "YOUR_POSTEX_API_TOKEN"){
-            useFallbackCities("no token configured");
+            clearTimeout(timeoutId);
+            useFallbackCities();
             return;
         }
 
@@ -879,19 +917,26 @@ input, select{ font-family:inherit; }
 
             if(names.length === 0){ throw new Error("No delivery cities in PostEx response"); }
 
-            allCities = names;
-            citiesReady = true;
-            cityStatus.classList.remove("loading");
-            cityStatus.textContent = "شہروں کی لائیو فہرست لوڈ ہو گئی ہے۔";
+            clearTimeout(timeoutId);
+            useLiveCities(names);
         })
         .catch(function(err){
             // Do not crash, do not show a blank field — fall back gracefully.
             console.warn("PostEx city API unavailable, using fallback city list.", err);
-            useFallbackCities("api error");
+            clearTimeout(timeoutId);
+            useFallbackCities();
         });
     }
 
-    loadCitiesFromAPI();
+    try{
+        loadCitiesFromAPI();
+    }catch(err){
+        // Guarantees a synchronous error here (e.g. malformed URL) can
+        // never stop the rest of this script — including form validation
+        // and WhatsApp submission further below — from running.
+        console.warn("City loading failed unexpectedly, using fallback list.", err);
+        useFallbackCities();
+    }
 
     function renderCityOptions(query){
         var q = (query || "").trim().toLowerCase();
