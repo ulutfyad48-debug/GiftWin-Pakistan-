@@ -58,21 +58,7 @@ const LUCKY_DRAW_CONFIG = {
     // Country code + number, no "+", no spaces, no leading zero.
     // This is where the completed registration message will be sent.
     // ---------------------------------------------------------------
-    whatsappNumber: "923125540048",
-
-    // ---------------------------------------------------------------
-    // 7. FALLBACK CITY LIST
-    // This website is fully static (no backend), so it tries to load
-    // the live city list from the PostEx API first. If that request
-    // fails for any reason (no internet, CORS block, API downtime),
-    // it automatically switches to this list instead, so the form
-    // never breaks. Edit this list any time to keep it up to date.
-    // ---------------------------------------------------------------
-    fallbackCities: [
-        "Peshawar", "Islamabad", "Rawalpindi", "Lahore", "Karachi",
-        "Multan", "Faisalabad", "Sialkot", "Gujranwala", "Hyderabad",
-        "Quetta", "Bahawalpur", "Sargodha", "Sukkur", "Abbottabad"
-    ]
+    whatsappNumber: "923125540048"
 };
 
 // =====================================================================
@@ -89,6 +75,15 @@ const LUCKY_DRAW_CONFIG = {
 // server, no Node.js, no database, as requested), the token below should be
 // treated as visible to the public. Only use a token here that you are
 // comfortable being publicly viewable, and rotate it periodically.
+//
+// IMPORTANT — NO FALLBACK CITY LIST:
+// There is intentionally no backup city list in this file. The City field
+// on the website depends entirely on this token and the PostEx API working
+// from the visitor's browser. If the token is missing/invalid, or PostEx
+// blocks the request (which is common for browser-based calls due to
+// CORS), the City field will show a clear "could not load" message with a
+// Retry button instead of any city options. Test this on the live hosted
+// site (not just locally) before relying on it for real registrations.
 // -----------------------------------------------------------------------
 const POSTEX_API_TOKEN = "YmU3Nzg4Y2Y1YzAzNDc3YzgxMzdlMzA0Yjc1MGNjMDk6Y2IzM2ViZTI2NGE4NDVhNTlmYzczOGY3Njg2OTA4Y2Y=";
 
