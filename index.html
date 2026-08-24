@@ -647,49 +647,49 @@ input, select{ font-family:inherit; }
             </div>
 
             <!-- Shown when registration is OPEN -->
-            <form id="registration-form" novalidate>
+            <form id="registration-form" novalidate dir="ltr" style="text-align:left;">
 
                 <div class="field" id="field-name">
-                    <label for="input-name">پورا نام <span class="required-mark">*</span></label>
-                    <input type="text" id="input-name" autocomplete="name" placeholder="اپنا پورا نام لکھیں">
-                    <div class="error-msg">⚠️ براہ کرم اپنا پورا نام درج کریں۔</div>
+                    <label for="input-name">Full Name <span class="required-mark">*</span></label>
+                    <input type="text" id="input-name" autocomplete="name" placeholder="Enter your full name">
+                    <div class="error-msg">⚠️ Please enter your full name.</div>
                 </div>
 
                 <div class="field" id="field-mobile">
-                    <label for="input-mobile">موبائل نمبر <span class="required-mark">*</span></label>
+                    <label for="input-mobile">Mobile Number <span class="required-mark">*</span></label>
                     <input type="tel" id="input-mobile" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
-                    <div class="hint">فارمیٹ: 03XXXXXXXXX</div>
-                    <div class="error-msg">⚠️ درست موبائل نمبر درج کریں (مثال: 03XXXXXXXXX)۔</div>
+                    <div class="hint">Format: 03XXXXXXXXX</div>
+                    <div class="error-msg">⚠️ Please enter a valid mobile number (e.g. 03XXXXXXXXX).</div>
                 </div>
 
                 <div class="field" id="field-emergency">
-                    <label for="input-emergency">متبادل / ایمرجنسی نمبر <span class="required-mark">*</span></label>
+                    <label for="input-emergency">Emergency / Alternate Number <span class="required-mark">*</span></label>
                     <input type="tel" id="input-emergency" autocomplete="tel" placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
-                    <div class="error-msg">⚠️ ایمرجنسی نمبر، موبائل نمبر سے مختلف ہونا چاہیے۔</div>
+                    <div class="error-msg">⚠️ Emergency number must be different from the mobile number.</div>
                 </div>
 
                 <div class="field city-field" id="field-city">
-                    <label for="input-city">شہر <span class="required-mark">*</span></label>
-                    <input type="text" id="input-city" class="city-input" placeholder="اپنا شہر تلاش کریں..." autocomplete="off">
+                    <label for="input-city">City <span class="required-mark">*</span></label>
+                    <input type="text" id="input-city" class="city-input" placeholder="Search your city..." autocomplete="off">
                     <div class="city-dropdown" id="city-dropdown"></div>
-                    <div class="city-status" id="city-status">شہروں کی فہرست لوڈ ہو رہی ہے...</div>
-                    <div class="error-msg">⚠️ براہ کرم فہرست میں سے اپنا شہر منتخب کریں۔</div>
+                    <div class="city-status" id="city-status">Loading city list...</div>
+                    <div class="error-msg">⚠️ Please select your city from the list.</div>
                 </div>
 
                 <div class="field" id="field-address">
-                    <label for="input-address">مکمل پتہ <span class="required-mark">*</span></label>
-                    <textarea id="input-address" placeholder="گھر نمبر، گلی، محلہ، علاقہ..."></textarea>
-                    <div class="error-msg">⚠️ براہ کرم اپنا مکمل پتہ درج کریں۔</div>
+                    <label for="input-address">Complete Address <span class="required-mark">*</span></label>
+                    <textarea id="input-address" placeholder="House no., street, area, city..."></textarea>
+                    <div class="error-msg">⚠️ Please enter your complete address.</div>
                 </div>
 
                 <div class="checkbox-field" id="field-terms">
                     <input type="checkbox" id="input-terms">
-                    <label for="input-terms">میں تصدیق کرتا/کرتی ہوں کہ میری فراہم کردہ معلومات درست ہیں اور میں Lucky Draw کی شرائط کو سمجھتا/سمجھتی ہوں۔</label>
+                    <label for="input-terms">I confirm that the information I have provided is accurate, and I understand the Lucky Draw terms.</label>
                 </div>
-                <div class="error-msg" id="terms-error" style="display:none; margin-top:-12px; margin-bottom:18px;">⚠️ آگے بڑھنے کے لیے شرائط کو قبول کرنا ضروری ہے۔</div>
+                <div class="error-msg" id="terms-error" style="display:none; margin-top:-12px; margin-bottom:18px;">⚠️ You must accept the terms to continue.</div>
 
                 <button type="submit" class="btn-submit" id="submit-btn">
-                    <span>رجسٹریشن مکمل کریں</span>
+                    <span>Complete Registration</span>
                     <span>🎁</span>
                 </button>
             </form>
@@ -827,32 +827,32 @@ input, select{ font-family:inherit; }
     var cityStatus = document.getElementById("city-status");
     var fieldCity = document.getElementById("field-city");
 
-    var allCities = [];          // final list actually used (API or fallback)
+    var allCities = [];          // populated only from the live PostEx API
     var selectedCity = "";       // must match an entry in allCities exactly
-    var citiesReady = false;
-    var citiesSettled = false;   // guards against the fallback running twice
+    var citiesReady = false;     // true once we have a usable list from the API
+    var citiesSettled = false;   // guards against double-handling
 
-    // How long we wait for the PostEx API before giving up and using the
-    // fallback list. This is the fix for "loading... forever": some CORS
-    // failures never fire a normal fetch error in certain browsers, so a
-    // timer is the only reliable way to guarantee we always move on.
-    var API_TIMEOUT_MS = 6000;
+    // How long we wait for the PostEx API before showing a failure state.
+    // This is the fix for "loading... forever": some CORS failures never
+    // fire a normal fetch error in certain browsers, so a timer is the
+    // only reliable way to guarantee the status always updates.
+    var API_TIMEOUT_MS = 8000;
 
-    function useFallbackCities(){
-        if(citiesSettled) return; // never run this twice
+    function showCityLoadFailed(){
+        if(citiesSettled) return;
         citiesSettled = true;
 
-        var list = (cfg.fallbackCities && cfg.fallbackCities.length) ? cfg.fallbackCities : [];
-        allCities = list.slice();
-        citiesReady = true;
+        citiesReady = false;
+        allCities = [];
         cityStatus.classList.remove("loading");
-        if(allCities.length > 0){
-            cityStatus.textContent = "شہروں کی فہرست دستیاب ہے۔";
-        }else{
-            cityStatus.textContent = "⚠️ شہروں کی فہرست دستیاب نہیں، براہ کرم بعد میں کوشش کریں۔";
+        cityStatus.innerHTML = '⚠️ Could not load the city list from PostEx API. <button type="button" id="retry-cities-btn" style="background:none;border:none;padding:0;color:#c2410c;font-weight:700;text-decoration:underline;cursor:pointer;font-size:inherit;">Retry</button>';
+        var retryBtn = document.getElementById("retry-cities-btn");
+        if(retryBtn){
+            retryBtn.addEventListener("click", function(){
+                citiesSettled = false;
+                loadCitiesFromAPI();
+            });
         }
-        // If the dropdown is already open (user clicked in before this
-        // resolved), refresh it now so the list actually appears.
         if(cityDropdown.classList.contains("open")){
             renderCityOptions(cityInput.value);
         }
@@ -865,34 +865,38 @@ input, select{ font-family:inherit; }
         allCities = names;
         citiesReady = true;
         cityStatus.classList.remove("loading");
-        cityStatus.textContent = "شہروں کی لائیو فہرست لوڈ ہو گئی ہے۔";
+        cityStatus.textContent = "✓ " + names.length + " cities loaded from PostEx.";
         if(cityDropdown.classList.contains("open")){
             renderCityOptions(cityInput.value);
         }
     }
 
     function loadCitiesFromAPI(){
+        cityStatus.classList.remove("loading");
         cityStatus.classList.add("loading");
-        cityStatus.textContent = "شہروں کی فہرست لوڈ ہو رہی ہے...";
+        cityStatus.textContent = "Loading city list from PostEx...";
 
         // Hard safety net: no matter what happens to the fetch below
         // (hangs, silent CORS failures, slow network), we guarantee the
-        // form becomes usable within API_TIMEOUT_MS.
+        // status updates within API_TIMEOUT_MS instead of loading forever.
         var timeoutId = setTimeout(function(){
-            console.warn("PostEx city API timed out after " + API_TIMEOUT_MS + "ms, using fallback city list.");
-            useFallbackCities();
+            console.warn("PostEx city API timed out after " + API_TIMEOUT_MS + "ms.");
+            showCityLoadFailed();
         }, API_TIMEOUT_MS);
 
         // NOTE (static-site limitation): This calls the PostEx API directly
         // from the browser, as required for a backend-free static site.
         // In practice, most merchant/logistics APIs (including PostEx) are
         // built for server-to-server use and block direct browser requests
-        // via CORS. If that happens here, the browser will refuse the
-        // request before any response is seen by this code — the timeout
-        // above (and/or the .catch() below) is what recovers from that.
+        // via CORS. If that happens, the browser refuses the request before
+        // any response reaches this code — the timeout above is what
+        // recovers from that and shows a clear failure state (per your
+        // request, there is no fallback city list — the real API status
+        // is always shown honestly).
         if(typeof POSTEX_API_TOKEN === "undefined" || !POSTEX_API_TOKEN || POSTEX_API_TOKEN === "YOUR_POSTEX_API_TOKEN"){
             clearTimeout(timeoutId);
-            useFallbackCities();
+            console.warn("POSTEX_API_TOKEN is not configured in config.js.");
+            showCityLoadFailed();
             return;
         }
 
@@ -921,10 +925,9 @@ input, select{ font-family:inherit; }
             useLiveCities(names);
         })
         .catch(function(err){
-            // Do not crash, do not show a blank field — fall back gracefully.
-            console.warn("PostEx city API unavailable, using fallback city list.", err);
+            console.warn("PostEx city API failed.", err);
             clearTimeout(timeoutId);
-            useFallbackCities();
+            showCityLoadFailed();
         });
     }
 
@@ -934,8 +937,8 @@ input, select{ font-family:inherit; }
         // Guarantees a synchronous error here (e.g. malformed URL) can
         // never stop the rest of this script — including form validation
         // and WhatsApp submission further below — from running.
-        console.warn("City loading failed unexpectedly, using fallback list.", err);
-        useFallbackCities();
+        console.warn("City loading failed unexpectedly.", err);
+        showCityLoadFailed();
     }
 
     function renderCityOptions(query){
@@ -947,14 +950,18 @@ input, select{ font-family:inherit; }
         cityDropdown.innerHTML = "";
 
         if(!citiesReady){
-            cityDropdown.classList.remove("open");
+            var notReady = document.createElement("div");
+            notReady.className = "city-empty";
+            notReady.textContent = "City list not loaded yet.";
+            cityDropdown.appendChild(notReady);
+            cityDropdown.classList.add("open");
             return;
         }
 
         if(matches.length === 0){
             var empty = document.createElement("div");
             empty.className = "city-empty";
-            empty.textContent = "کوئی شہر نہیں ملا۔";
+            empty.textContent = "No matching city found.";
             cityDropdown.appendChild(empty);
         }else{
             matches.slice(0, 40).forEach(function(city){
