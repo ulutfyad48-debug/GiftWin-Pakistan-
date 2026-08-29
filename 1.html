@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Digitalsiteshub - حساب کتاب</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --card:#ffffff;
+    --ink:#1b1f27;
+    --ink-soft:#5b6472;
+    --line:#e6e8ec;
+    --accent:#0f5f4c;
+    --accent-2:#0a7a5f;
+    --accent-soft:#e7f3ef;
+    --danger:#b3261e;
+    --danger-soft:#fbe9e8;
+    --gold:#a9822f;
+    --given:#b3261e;
+    --received:#0f6b3c;
+    --radius:14px;
+    --shadow: 0 1px 2px rgba(20,20,20,0.04), 0 8px 24px -12px rgba(20,20,20,0.12);
+  }
+
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+
+  html,body{
+    margin:0; padding:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Noto Naskh Arabic','Noto Nastaliq Urdu','Inter',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body.lang-en{
+    font-family:'Inter','Noto Naskh Arabic',sans-serif;
+  }
+
+  [dir="rtl"] body, .rtl{ direction:rtl; }
+  .ltr{ direction:ltr; }
+
+  .app{
+    max-width:720px;
+    margin:0 auto;
+    padding:14px 14px 90px;
+  }
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 16px;
+    background:linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+    border-radius:16px;
+    color:#fff;
+    margin-bottom:14px;
+    box-shadow:var(--shadow);
+  }
+  .brandblock{ display:flex; flex-direction:column; gap:2px; }
+  .brand-title{ font-weight:800; font-size:18px; letter-spacing:.2px; }
+  .brand-sub{ font-size:12px; opacity:.9; }
+  .topbar-actions{ display:flex; gap:8px; align-items:center; }
+
+  .icon-btn{
+    width:38px; height:38px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.35);
+    background:rgba(255,255,255,0.12);
+    color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:15px;
+    cursor:pointer;
+    font-weight:700;
+  }
+  .icon-btn:active{ transform:scale(0.95); }
+
+  /* ---------- Cards ---------- */
+  .card{
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .card-title{
+    font-size:14px;
+    font-weight:700;
+    color:var(--accent);
+    margin:0 0 12px;
+    display:flex; align-items:center; gap:8px;
+  }
+  .card-title .dot{
+    width:6px; height:6px; border-radius:50%; background:var(--gold);
+    display:inline-block;
+  }
+
+  .field{ margin-bottom:12px; }
+  .field:last-child{ margin-bottom:0; }
+  label{
+    display:block;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  input[type=text], input[type=number], input[type=date], input[type=tel], textarea, select{
+    width:100%;
+    padding:11px 12px;
+    border:1.5px solid var(--line);
+    border-radius:10px;
+    font-size:14.5px;
+    background:#fbfbfc;
+    color:var(--ink);
+    font-family:inherit;
+    outline:none;
+    transition:border-color .15s, background .15s;
+  }
+  input:focus, textarea:focus, select:focus{
+    border-color:var(--accent-2);
+    background:#fff;
+  }
+  textarea{ resize:vertical; min-height:60px; }
+
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:13px 18px;
+    border-radius:12px;
+    border:none;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+    font-family:inherit;
+    transition:transform .08s, opacity .15s;
+    width:100%;
+  }
+  .btn:active{ transform:scale(0.98); }
+  .btn-primary{ background:var(--accent); color:#fff; }
+  .btn-primary:hover{ background:var(--accent-2); }
+  .btn-gold{
+    background:linear-gradient(135deg,#b8923f,#8f6d24);
+    color:#fff;
+  }
+  .btn-outline{
+    background:#fff; color:var(--accent); border:1.5px solid var(--accent);
+  }
+  .btn-danger-outline{
+    background:#fff; color:var(--danger); border:1.5px solid var(--danger);
+  }
+  .btn-soft{
+    background:var(--accent-soft); color:var(--accent);
+  }
+  .btn-sm{ padding:8px 12px; font-size:13px; width:auto; }
+  .btn-row{ display:flex; gap:10px; }
+  .btn-row .btn{ flex:1; }
+
+  /* ---------- Transactions ---------- */
+  .tx-list{ display:flex; flex-direction:column; gap:10px; }
+  .tx-item{
+    border:1.5px solid var(--line);
+    border-radius:12px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    position:relative;
+    background:#fdfdfd;
+  }
+  .tx-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .tx-desc{ font-size:14.5px; font-weight:600; color:var(--ink); flex:1; }
+  .tx-date{ font-size:11.5px; color:var(--ink-soft); margin-top:2px; }
+  .tx-amount{ font-size:16px; font-weight:800; white-space:nowrap; }
+  .tx-amount.given{ color:var(--given); }
+  .tx-amount.received{ color:var(--received); }
+  .tx-badge{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    padding:2px 9px;
+    border-radius:20px;
+    margin-top:4px;
+  }
+  .tx-badge.given{ background:var(--danger-soft); color:var(--given); }
+  .tx-badge.received{ background:var(--accent-soft); color:var(--received); }
+  .tx-actions{ display:flex; gap:8px; margin-top:6px; }
+  .tx-actions button{
+    flex:1;
+    padding:7px;
+    border-radius:8px;
+    border:1px solid var(--line);
+    background:#fff;
+    font-size:12.5px;
+    font-weight:600;
+    cursor:pointer;
+    color:var(--ink-soft);
+  }
+  .tx-actions button.edit{ color:var(--accent); border-color:var(--accent-soft); }
+  .tx-actions button.del{ color:var(--danger); border-color:var(--danger-soft); }
+
+  .empty-state{
+    text-align:center;
+    padding:30px 10px;
+    color:var(--ink-soft);
+    font-size:13.5px;
+  }
+
+  /* ---------- Summary ---------- */
+  .summary-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-bottom:12px;
+  }
+  .summary-box{
+    border-radius:12px;
+    padding:14px 12px;
+    text-align:center;
+  }
+  .summary-box.given{ background:var(--danger-soft); }
+  .summary-box.received{ background:var(--accent-soft); }
+  .summary-box .lbl{ font-size:12px; font-weight:600; color:var(--ink-soft); margin-bottom:4px; }
+  .summary-box.given .val{ color:var(--given); font-size:19px; font-weight:800; }
+  .summary-box.received .val{ color:var(--received); font-size:19px; font-weight:800; }
+
+  .balance-box{
+    border-radius:14px;
+    padding:20px 16px;
+    text-align:center;
+    color:#fff;
+    background:linear-gradient(135deg, var(--accent) 0%, var(--accent-2) 100%);
+  }
+  .balance-box.zero{ background:linear-gradient(135deg,#555c68,#3a3f47); }
+  .balance-box .lbl{ font-size:13px; opacity:.9; font-weight:600; margin-bottom:6px; }
+  .balance-box .val{ font-size:28px; font-weight:800; letter-spacing:.3px; }
+
+  /* ---------- Modal ---------- */
+  .modal-overlay{
+    position:fixed; inset:0;
+    background:rgba(15,20,20,0.5);
+    display:none;
+    align-items:flex-end;
+    justify-content:center;
+    z-index:1000;
+    padding:0;
+  }
+  .modal-overlay.show{ display:flex; }
+  .modal{
+    background:#fff;
+    width:100%;
+    max-width:720px;
+    border-radius:20px 20px 0 0;
+    padding:20px 18px calc(20px + env(safe-area-inset-bottom));
+    max-height:88vh;
+    overflow-y:auto;
+    animation:slideup .2s ease-out;
+  }
+  @keyframes slideup{ from{ transform:translateY(30px); opacity:0;} to{ transform:translateY(0); opacity:1;} }
+  .modal-header{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:16px;
+  }
+  .modal-title{ font-size:16px; font-weight:800; color:var(--accent); }
+  .modal-close{
+    width:32px; height:32px; border-radius:50%;
+    background:#f1f2f4; border:none; font-size:16px; cursor:pointer; color:var(--ink-soft);
+  }
+
+  .type-toggle{ display:flex; gap:8px; }
+  .type-opt{
+    flex:1;
+    padding:12px 8px;
+    border-radius:10px;
+    border:1.5px solid var(--line);
+    text-align:center;
+    font-size:13.5px;
+    font-weight:700;
+    cursor:pointer;
+    color:var(--ink-soft);
+    background:#fbfbfc;
+  }
+  .type-opt.active.given{ border-color:var(--given); background:var(--danger-soft); color:var(--given); }
+  .type-opt.active.received{ border-color:var(--received); background:var(--accent-soft); color:var(--received); }
+
+  /* ---------- Bottom actions ---------- */
+  .fixed-actions{
+    position:fixed;
+    bottom:0; left:0; right:0;
+    background:#fff;
+    border-top:1px solid var(--line);
+    padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+    display:flex;
+    gap:10px;
+    max-width:720px;
+    margin:0 auto;
+    box-shadow:0 -4px 16px rgba(0,0,0,0.06);
+    z-index:200;
+  }
+  .fixed-actions .btn{ padding:14px 10px; font-size:13.5px; }
+
+  .lang-switch{
+    display:flex;
+    background:rgba(255,255,255,0.15);
+    border-radius:8px;
+    overflow:hidden;
+    border:1px solid rgba(255,255,255,.35);
+  }
+  .lang-switch button{
+    border:none; background:transparent; color:#fff;
+    padding:7px 10px; font-size:12px; font-weight:700; cursor:pointer;
+  }
+  .lang-switch button.active{ background:rgba(255,255,255,0.28); }
+
+  .section-collapsed{ display:none; }
+
+  .logo-preview{
+    width:64px; height:64px;
+    border-radius:10px;
+    border:1.5px dashed var(--line);
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+    background:#fafafa;
+    margin-bottom:10px;
+    font-size:11px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+  .logo-preview img{ width:100%; height:100%; object-fit:contain; }
+
+  .toast{
+    position:fixed;
+    bottom:90px; left:50%;
+    transform:translateX(-50%);
+    background:#1b1f27;
+    color:#fff;
+    padding:11px 20px;
+    border-radius:30px;
+    font-size:13.5px;
+    font-weight:600;
+    z-index:2000;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .25s, bottom .25s;
+    max-width:88%;
+    text-align:center;
+  }
+  .toast.show{ opacity:1; bottom:100px; }
+
+  .confirm-box{
+    text-align:center;
+  }
+  .confirm-box p{ font-size:14.5px; color:var(--ink); margin:0 0 18px; line-height:1.6; }
+
+  .stmt-no-badge{
+    font-size:12px;
+    color:var(--ink-soft);
+    background:#f1f2f4;
+    padding:4px 10px;
+    border-radius:8px;
+    display:inline-block;
+  }
+
+  .header-info-preview{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    line-height:1.6;
+    margin-top:2px;
+  }
+
+  ::-webkit-scrollbar{ width:0; height:0; }
+
+  /* -------- PDF render container (offscreen) -------- */
+  #pdf-render-area{
+    position:fixed;
+    top:-99999px;
+    left:-99999px;
+    width:794px;
+    background:#fff;
+  }
+</style>
+</head>
+<body class="lang-ur">
+
+<div class="app">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="brandblock">
+      <div class="brand-title" id="topBrandName">Digitalsiteshub</div>
+      <div class="brand-sub" data-i18n="tagline">حساب کتاب اسٹیٹمنٹ جنریٹر</div>
+    </div>
+    <div class="topbar-actions">
+      <div class="lang-switch">
+        <button id="btnLangUr" class="active" onclick="setLang('ur')">اردو</button>
+        <button id="btnLangEn" onclick="setLang('en')">EN</button>
+      </div>
+      <button class="icon-btn" onclick="openBusinessModal()" title="Business Info">⚙</button>
+    </div>
+  </div>
+
+  <!-- Statement Info -->
+  <div class="card">
+    <div class="card-title"><span class="dot"></span><span data-i18n="stmtInfo">اسٹیٹمنٹ کی تفصیل</span></div>
+    <div class="row2">
+      <div class="field">
+        <label data-i18n="stmtNo">اسٹیٹمنٹ نمبر</label>
+        <input type="text" id="stmtNumber" readonly>
+      </div>
+      <div class="field">
+        <label data-i18n="date">تاریخ</label>
+        <input type="date" id="stmtDate">
+      </div>
+    </div>
+    <div class="field">
+      <label data-i18n="personName">شخص کا نام</label>
+      <input type="text" id="personName" placeholder="مثال: احمد خان" oninput="saveState()">
+    </div>
+    <div class="row2">
+      <div class="field">
+        <label data-i18n="personMobile">موبائل نمبر</label>
+        <input type="tel" id="personMobile" placeholder="03XXXXXXXXX" oninput="saveState()">
+      </div>
+      <div class="field">
+        <label data-i18n="personAddress">پتہ (اختیاری)</label>
+        <input type="text" id="personAddress" placeholder="اختیاری" oninput="saveState()">
+      </div>
+    </div>
+  </div>
+
+  <!-- Transactions -->
+  <div class="card">
+    <div class="card-title"><span class="dot"></span><span data-i18n="transactions">لین دین کی تفصیل</span></div>
+    <div class="tx-list" id="txList"></div>
+    <div style="margin-top:12px;">
+      <button class="btn btn-primary" onclick="openTxModal()">
+        <span>+</span> <span data-i18n="addTransaction">نئی انٹری شامل کریں</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Summary -->
+  <div class="card">
+    <div class="card-title"><span class="dot"></span><span data-i18n="summary">خلاصہ</span></div>
+    <div class="summary-grid">
+      <div class="summary-box given">
+        <div class="lbl" data-i18n="totalGiven">کل میں نے دیے</div>
+        <div class="val" id="totalGivenVal">Rs. 0</div>
+      </div>
+      <div class="summary-box received">
+        <div class="lbl" data-i18n="totalReceived">کل مجھے ملے</div>
+        <div class="val" id="totalReceivedVal">Rs. 0</div>
+      </div>
+    </div>
+    <div class="balance-box zero" id="balanceBox">
+      <div class="lbl" id="balanceLabel" data-i18n="balanceEqual">حساب برابر ہے</div>
+      <div class="val" id="balanceVal">Rs. 0</div>
+    </div>
+  </div>
+
+  <!-- New / Clear -->
+  <div class="card">
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="confirmNewStatement()" data-i18n="newStatement">نیا اسٹیٹمنٹ</button>
+      <button class="btn btn-danger-outline" onclick="confirmClearStatement()" data-i18n="clearStatement">اسٹیٹمنٹ صاف کریں</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Fixed bottom actions -->
+<div class="fixed-actions">
+  <button class="btn btn-soft" onclick="printStatement()">
+    🖨️ <span data-i18n="print">پرنٹ</span>
+  </button>
+  <button class="btn btn-gold" onclick="downloadPDF()" id="pdfBtn">
+    ⬇ <span data-i18n="downloadPdf">بل / حساب ڈاؤن لوڈ کریں</span>
+  </button>
+</div>
+
+<!-- Transaction Modal -->
+<div class="modal-overlay" id="txModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="txModalTitle" data-i18n="addTransaction">نئی انٹری شامل کریں</div>
+      <button class="modal-close" onclick="closeTxModal()">✕</button>
+    </div>
+    <div class="field">
+      <label data-i18n="type">قسم</label>
+      <div class="type-toggle">
+        <div class="type-opt given" id="typeGivenOpt" onclick="selectTxType('given')" data-i18n="typeGiven">میں نے دیے</div>
+        <div class="type-opt received" id="typeReceivedOpt" onclick="selectTxType('received')" data-i18n="typeReceived">مجھے ملے</div>
+      </div>
+    </div>
+    <div class="field">
+      <label data-i18n="date">تاریخ</label>
+      <input type="date" id="txDate">
+    </div>
+    <div class="field">
+      <label data-i18n="description">تفصیل / وجہ</label>
+      <input type="text" id="txDesc" placeholder="مثال: پروگرام کے لیے رقم">
+    </div>
+    <div class="field">
+      <label data-i18n="amount">رقم (Rs.)</label>
+      <input type="number" id="txAmount" placeholder="0" inputmode="decimal">
+    </div>
+    <input type="hidden" id="txEditId">
+    <div class="btn-row" style="margin-top:6px;">
+      <button class="btn btn-outline" onclick="closeTxModal()" data-i18n="cancel">منسوخ</button>
+      <button class="btn btn-primary" onclick="saveTx()" data-i18n="save">محفوظ کریں</button>
+    </div>
+  </div>
+</div>
+
+<!-- Business Info Modal -->
+<div class="modal-overlay" id="bizModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" data-i18n="editBusiness">کاروباری معلومات میں تبدیلی</div>
+      <button class="modal-close" onclick="closeBusinessModal()">✕</button>
+    </div>
+
+    <div class="logo-preview" id="logoPreview" data-i18n="noLogo">لوگو نہیں</div>
+    <div class="field">
+      <label data-i18n="uploadLogo">لوگو اپلوڈ کریں (اختیاری)</label>
+      <input type="file" id="logoInput" accept="image/*" onchange="handleLogoUpload(event)">
+    </div>
+    <div class="field">
+      <label data-i18n="brandName">برانڈ / کاروبار کا نام</label>
+      <input type="text" id="bizBrand">
+    </div>
+    <div class="field">
+      <label data-i18n="ownerName">نام</label>
+      <input type="text" id="bizOwner">
+    </div>
+    <div class="field">
+      <label data-i18n="mobile">موبائل نمبر</label>
+      <input type="tel" id="bizMobile">
+    </div>
+    <div class="field">
+      <label data-i18n="address">پتہ</label>
+      <textarea id="bizAddress"></textarea>
+    </div>
+    <div class="btn-row" style="margin-top:6px;">
+      <button class="btn btn-outline" onclick="closeBusinessModal()" data-i18n="cancel">منسوخ</button>
+      <button class="btn btn-primary" onclick="saveBusinessInfo()" data-i18n="save">محفوظ کریں</button>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm Modal -->
+<div class="modal-overlay" id="confirmModalOverlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="confirmTitle" data-i18n="confirmTitle">تصدیق کریں</div>
+      <button class="modal-close" onclick="closeConfirmModal()">✕</button>
+    </div>
+    <div class="confirm-box">
+      <p id="confirmMsg"></p>
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="closeConfirmModal()" data-i18n="cancel">منسوخ</button>
+        <button class="btn btn-danger-outline" id="confirmActionBtn" data-i18n="confirm">تصدیق</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- Offscreen render area used for high-quality PDF snapshot -->
+<div id="pdf-render-area"></div>
+
+<script>
+/* ================= i18n ================= */
+const I18N = {
+  ur: {
+    tagline:"حساب کتاب اسٹیٹمنٹ جنریٹر",
+    stmtInfo:"اسٹیٹمنٹ کی تفصیل",
+    stmtNo:"اسٹیٹمنٹ نمبر",
+    date:"تاریخ",
+    personName:"شخص کا نام",
+    personMobile:"موبائل نمبر",
+    personAddress:"پتہ (اختیاری)",
+    transactions:"لین دین کی تفصیل",
+    addTransaction:"نئی انٹری شامل کریں",
+    summary:"خلاصہ",
+    totalGiven:"کل میں نے دیے",
+    totalReceived:"کل مجھے ملے",
+    balanceEqual:"حساب برابر ہے",
+    balanceRemainingToPay:"باقی رقم (میں نے دینے ہیں)",
+    balanceRemainingToReceive:"مجھے واپس لینے ہیں",
+    newStatement:"نیا اسٹیٹمنٹ",
+    clearStatement:"اسٹیٹمنٹ صاف کریں",
+    print:"پرنٹ",
+    downloadPdf:"بل / حساب ڈاؤن لوڈ کریں",
+    type:"قسم",
+    typeGiven:"میں نے دیے",
+    typeReceived:"مجھے ملے",
+    description:"تفصیل / وجہ",
+    amount:"رقم (Rs.)",
+    cancel:"منسوخ",
+    save:"محفوظ کریں",
+    editBusiness:"کاروباری معلومات میں تبدیلی",
+    noLogo:"لوگو نہیں",
+    uploadLogo:"لوگو اپلوڈ کریں (اختیاری)",
+    brandName:"برانڈ / کاروبار کا نام",
+    ownerName:"نام",
+    mobile:"موبائل نمبر",
+    address:"پتہ",
+    confirmTitle:"تصدیق کریں",
+    confirm:"تصدیق",
+    edit:"ترمیم",
+    del:"حذف",
+    emptyTx:"ابھی کوئی انٹری شامل نہیں کی گئی",
+    toastSaved:"محفوظ ہو گیا",
+    toastDeleted:"حذف ہو گیا",
+    toastCleared:"اسٹیٹمنٹ صاف کر دیا گیا",
+    toastNew:"نیا اسٹیٹمنٹ شروع ہو گیا",
+    confirmNewMsg:"کیا آپ نیا اسٹیٹمنٹ شروع کرنا چاہتے ہیں؟ موجودہ اندراجات محفوظ نہیں رہیں گی۔",
+    confirmClearMsg:"کیا آپ واقعی اس اسٹیٹمنٹ کا تمام ڈیٹا صاف کرنا چاہتے ہیں؟ یہ عمل واپس نہیں ہو سکتا۔",
+    fillFields:"براہ کرم تفصیل اور رقم درج کریں",
+    pdfStmtNo:"اسٹیٹمنٹ نمبر",
+    pdfDate:"تاریخ",
+    pdfPerson:"شخص کا نام",
+    pdfMobile:"موبائل",
+    pdfAddress:"پتہ",
+    pdfColDate:"تاریخ",
+    pdfColDesc:"تفصیل",
+    pdfColType:"قسم",
+    pdfColAmount:"رقم",
+    pdfTotalGiven:"کل میں نے دیے",
+    pdfTotalReceived:"کل مجھے ملے",
+    pdfBalanceEqual:"حساب برابر ہے",
+    pdfBalancePay:"باقی رقم",
+    pdfBalanceReceive:"مجھے واپس لینے ہیں",
+    pdfFooter:"یہ ایک کمپیوٹر سے تیار کردہ اسٹیٹمنٹ ہے۔",
+    pdfSign:"دستخط",
+    generating:"تیار ہو رہا ہے...",
+  },
+  en: {
+    tagline:"Statement & Bill Generator",
+    stmtInfo:"Statement Details",
+    stmtNo:"Statement Number",
+    date:"Date",
+    personName:"Person's Name",
+    personMobile:"Mobile Number",
+    personAddress:"Address (optional)",
+    transactions:"Transactions",
+    addTransaction:"Add Transaction",
+    summary:"Summary",
+    totalGiven:"Total Given",
+    totalReceived:"Total Received",
+    balanceEqual:"Account is Settled",
+    balanceRemainingToPay:"Balance Remaining (I owe)",
+    balanceRemainingToReceive:"I Need to Receive",
+    newStatement:"New Statement",
+    clearStatement:"Clear Statement",
+    print:"Print",
+    downloadPdf:"Download Bill / Statement",
+    type:"Type",
+    typeGiven:"I Paid",
+    typeReceived:"I Received",
+    description:"Description / Details",
+    amount:"Amount (Rs.)",
+    cancel:"Cancel",
+    save:"Save",
+    editBusiness:"Edit Business Information",
+    noLogo:"No Logo",
+    uploadLogo:"Upload Logo (optional)",
+    brandName:"Brand / Business Name",
+    ownerName:"Name",
+    mobile:"Mobile Number",
+    address:"Address",
+    confirmTitle:"Please Confirm",
+    confirm:"Confirm",
+    edit:"Edit",
+    del:"Delete",
+    emptyTx:"No transactions added yet",
+    toastSaved:"Saved successfully",
+    toastDeleted:"Deleted",
+    toastCleared:"Statement cleared",
+    toastNew:"New statement started",
+    confirmNewMsg:"Do you want to start a new statement? Current entries will not be kept here.",
+    confirmClearMsg:"Are you sure you want to clear all data in this statement? This cannot be undone.",
+    fillFields:"Please enter description and amount",
+    pdfStmtNo:"Statement No.",
+    pdfDate:"Date",
+    pdfPerson:"Person Name",
+    pdfMobile:"Mobile",
+    pdfAddress:"Address",
+    pdfColDate:"Date",
+    pdfColDesc:"Description",
+    pdfColType:"Type",
+    pdfColAmount:"Amount",
+    pdfTotalGiven:"Total Given",
+    pdfTotalReceived:"Total Received",
+    pdfBalanceEqual:"Account is Settled",
+    pdfBalancePay:"Balance Remaining",
+    pdfBalanceReceive:"Amount to Receive",
+    pdfFooter:"This is a computer-generated statement.",
+    pdfSign:"Signature",
+    generating:"Generating...",
+  }
+};
+
+let currentLang = 'ur';
+
+function t(key){ return I18N[currentLang][key] || key; }
+
+function applyI18n(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(I18N[currentLang][key]) el.textContent = I18N[currentLang][key];
+  });
+  document.documentElement.lang = currentLang === 'ur' ? 'ur' : 'en';
+  document.documentElement.dir = currentLang === 'ur' ? 'rtl' : 'ltr';
+  document.body.className = currentLang === 'ur' ? 'lang-ur' : 'lang-en';
+  document.getElementById('btnLangUr').classList.toggle('active', currentLang==='ur');
+  document.getElementById('btnLangEn').classList.toggle('active', currentLang==='en');
+  renderTxList();
+  renderSummary();
+}
+
+function setLang(lang){
+  currentLang = lang;
+  localStorage.setItem('dsh_lang', lang);
+  applyI18n();
+}
+
+/* ================= State ================= */
+const STORAGE_KEY = 'dsh_statement_v1';
+const BIZ_KEY = 'dsh_business_v1';
+
+let state = {
+  stmtNumber: '',
+  stmtDate: '',
+  personName: '',
+  personMobile: '',
+  personAddress: '',
+  transactions: [] // {id, date, desc, amount, type: 'given'|'received'}
+};
+
+let business = {
+  brand: 'Digitalsiteshub',
+  owner: 'YADULLAH',
+  mobile: '03125540048',
+  address: 'Tarnab Farm, Peshawar',
+  logo: ''
+};
+
+function genStatementNumber(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const stored = parseInt(localStorage.getItem('dsh_stmt_seq') || '0', 10) + 1;
+  localStorage.setItem('dsh_stmt_seq', String(stored));
+  return 'DSH-' + y + '-' + String(stored).padStart(4,'0');
+}
+
+function loadState(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw){
+    try{ state = JSON.parse(raw); }catch(e){}
+  }
+  if(!state.stmtNumber){
+    state.stmtNumber = genStatementNumber();
+  }
+  if(!state.stmtDate){
+    state.stmtDate = new Date().toISOString().slice(0,10);
+  }
+
+  const rawBiz = localStorage.getItem(BIZ_KEY);
+  if(rawBiz){
+    try{ business = JSON.parse(rawBiz); }catch(e){}
+  }
+
+  const savedLang = localStorage.getItem('dsh_lang');
+  if(savedLang) currentLang = savedLang;
+}
+
+function saveState(){
+  state.personName = document.getElementById('personName').value;
+  state.personMobile = document.getElementById('personMobile').value;
+  state.personAddress = document.getElementById('personAddress').value;
+  state.stmtDate = document.getElementById('stmtDate').value;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function saveBusinessToStorage(){
+  localStorage.setItem(BIZ_KEY, JSON.stringify(business));
+}
+
+function renderFormFromState(){
+  document.getElementById('stmtNumber').value = state.stmtNumber;
+  document.getElementById('stmtDate').value = state.stmtDate;
+  document.getElementById('personName').value = state.personName || '';
+  document.getElementById('personMobile').value = state.personMobile || '';
+  document.getElementById('personAddress').value = state.personAddress || '';
+  document.getElementById('topBrandName').textContent = business.brand || 'Digitalsiteshub';
+}
+
+/* ================= Transactions ================= */
+let txTypeSelected = 'given';
+
+function openTxModal(editId){
+  document.getElementById('txEditId').value = editId || '';
+  if(editId){
+    const tx = state.transactions.find(t=>t.id === editId);
+    document.getElementById('txModalTitle').textContent = t('edit');
+    document.getElementById('txDate').value = tx.date;
+    document.getElementById('txDesc').value = tx.desc;
+    document.getElementById('txAmount').value = tx.amount;
+    txTypeSelected = tx.type;
+  } else {
+    document.getElementById('txModalTitle').textContent = t('addTransaction');
+    document.getElementById('txDate').value = new Date().toISOString().slice(0,10);
+    document.getElementById('txDesc').value = '';
+    document.getElementById('txAmount').value = '';
+    txTypeSelected = 'given';
+  }
+  selectTxType(txTypeSelected);
+  document.getElementById('txModalOverlay').classList.add('show');
+}
+
+function closeTxModal(){
+  document.getElementById('txModalOverlay').classList.remove('show');
+}
+
+function selectTxType(type){
+  txTypeSelected = type;
+  document.getElementById('typeGivenOpt').classList.toggle('active', type==='given');
+  document.getElementById('typeReceivedOpt').classList.toggle('active', type==='received');
+}
+
+function saveTx(){
+  const date = document.getElementById('txDate').value || new Date().toISOString().slice(0,10);
+  const desc = document.getElementById('txDesc').value.trim();
+  const amount = parseFloat(document.getElementById('txAmount').value);
+  const editId = document.getElementById('txEditId').value;
+
+  if(!desc || isNaN(amount) || amount <= 0){
+    showToast(t('fillFields'));
+    return;
+  }
+
+  if(editId){
+    const tx = state.transactions.find(t=>t.id === editId);
+    tx.date = date; tx.desc = desc; tx.amount = amount; tx.type = txTypeSelected;
+  } else {
+    state.transactions.push({
+      id: 'tx_' + Date.now() + '_' + Math.floor(Math.random()*1000),
+      date, desc, amount, type: txTypeSelected
+    });
+  }
+
+  saveState();
+  renderTxList();
+  renderSummary();
+  closeTxModal();
+  showToast(t('toastSaved'));
+}
+
+function deleteTx(id){
+  state.transactions = state.transactions.filter(t=>t.id !== id);
+  saveState();
+  renderTxList();
+  renderSummary();
+  showToast(t('toastDeleted'));
+}
+
+function formatMoney(n){
+  return 'Rs. ' + Number(n).toLocaleString('en-US', {maximumFractionDigits:2});
+}
+
+function renderTxList(){
+  const list = document.getElementById('txList');
+  list.innerHTML = '';
+  if(state.transactions.length === 0){
+    list.innerHTML = `<div class="empty-state">${t('emptyTx')}</div>`;
+    return;
+  }
+  const sorted = [...state.transactions].sort((a,b)=> new Date(a.date) - new Date(b.date));
+  sorted.forEach(tx=>{
+    const div = document.createElement('div');
+    div.className = 'tx-item';
+    div.innerHTML = `
+      <div class="tx-top">
+        <div>
+          <div class="tx-desc">${escapeHtml(tx.desc)}</div>
+          <div class="tx-date">${tx.date}</div>
+          <span class="tx-badge ${tx.type}">${tx.type==='given' ? t('typeGiven') : t('typeReceived')}</span>
+        </div>
+        <div class="tx-amount ${tx.type}">${tx.type==='given' ? '-' : '+'} ${formatMoney(tx.amount)}</div>
+      </div>
+      <div class="tx-actions">
+        <button class="edit" onclick="openTxModal('${tx.id}')">✎ ${t('edit')}</button>
+        <button class="del" onclick="deleteTx('${tx.id}')">🗑 ${t('del')}</button>
+      </div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function computeTotals(){
+  let given = 0, received = 0;
+  state.transactions.forEach(tx=>{
+    if(tx.type === 'given') given += Number(tx.amount);
+    else received += Number(tx.amount);
+  });
+  return { given, received, balance: given - received };
+}
+
+function renderSummary(){
+  const { given, received, balance } = computeTotals();
+  document.getElementById('totalGivenVal').textContent = formatMoney(given);
+  document.getElementById('totalReceivedVal').textContent = formatMoney(received);
+
+  const box = document.getElementById('balanceBox');
+  const lbl = document.getElementById('balanceLabel');
+  const val = document.getElementById('balanceVal');
+
+  if(balance === 0){
+    box.className = 'balance-box zero';
+    lbl.textContent = t('balanceEqual');
+    val.textContent = formatMoney(0);
+  } else if(balance > 0){
+    box.className = 'balance-box';
+    lbl.textContent = t('balanceRemainingToReceive');
+    val.textContent = formatMoney(balance);
+  } else {
+    box.className = 'balance-box';
+    lbl.textContent = t('balanceRemainingToPay');
+    val.textContent = formatMoney(Math.abs(balance));
+  }
+}
+
+function escapeHtml(str){
+  const d = document.createElement('div');
+  d.textContent = str;
+  return d.innerHTML;
+}
+
+/* ================= Business Info ================= */
+function openBusinessModal(){
+  document.getElementById('bizBrand').value = business.brand;
+  document.getElementById('bizOwner').value = business.owner;
+  document.getElementById('bizMobile').value = business.mobile;
+  document.getElementById('bizAddress').value = business.address;
+  const preview = document.getElementById('logoPreview');
+  if(business.logo){
+    preview.innerHTML = `<img src="${business.logo}">`;
+  } else {
+    preview.innerHTML = '';
+    preview.textContent = t('noLogo');
+  }
+  document.getElementById('bizModalOverlay').classList.add('show');
+}
+
+function closeBusinessModal(){
+  document.getElementById('bizModalOverlay').classList.remove('show');
+}
+
+function handleLogoUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    business.logo = ev.target.result;
+    const preview = document.getElementById('logoPreview');
+    preview.innerHTML = `<img src="${business.logo}">`;
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveBusinessInfo(){
+  business.brand = document.getElementById('bizBrand').value.trim() || 'Digitalsiteshub';
+  business.owner = document.getElementById('bizOwner').value.trim();
+  business.mobile = document.getElementById('bizMobile').value.trim();
+  business.address = document.getElementById('bizAddress').value.trim();
+  saveBusinessToStorage();
+  document.getElementById('topBrandName').textContent = business.brand;
+  closeBusinessModal();
+  showToast(t('toastSaved'));
+}
+
+/* ================= New / Clear ================= */
+let pendingConfirmAction = null;
+
+function confirmNewStatement(){
+  document.getElementById('confirmMsg').textContent = t('confirmNewMsg');
+  pendingConfirmAction = doNewStatement;
+  document.getElementById('confirmActionBtn').onclick = ()=>{ pendingConfirmAction(); closeConfirmModal(); };
+  document.getElementById('confirmModalOverlay').classList.add('show');
+}
+
+function confirmClearStatement(){
+  document.getElementById('confirmMsg').textContent = t('confirmClearMsg');
+  pendingConfirmAction = doClearStatement;
+  document.getElementById('confirmActionBtn').onclick = ()=>{ pendingConfirmAction(); closeConfirmModal(); };
+  document.getElementById('confirmModalOverlay').classList.add('show');
+}
+
+function closeConfirmModal(){
+  document.getElementById('confirmModalOverlay').classList.remove('show');
+}
+
+function doNewStatement(){
+  state = {
+    stmtNumber: genStatementNumber(),
+    stmtDate: new Date().toISOString().slice(0,10),
+    personName: '',
+    personMobile: '',
+    personAddress: '',
+    transactions: []
+  };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  renderFormFromState();
+  renderTxList();
+  renderSummary();
+  showToast(t('toastNew'));
+}
+
+function doClearStatement(){
+  state.personName = '';
+  state.personMobile = '';
+  state.personAddress = '';
+  state.transactions = [];
+  saveState();
+  renderFormFromState();
+  renderTxList();
+  renderSummary();
+  showToast(t('toastCleared'));
+}
+
+/* ================= Toast ================= */
+let toastTimer;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ toast.classList.remove('show'); }, 2200);
+}
+
+/* ================= Print ================= */
+function printStatement(){
+  buildPdfHtml();
+  window.print();
+}
+
+/* ================= PDF Generation ================= */
+function buildPdfHtml(){
+  const { given, received, balance } = computeTotals();
+  const isUr = currentLang === 'ur';
+  const dirAttr = isUr ? 'rtl' : 'ltr';
+  const fontFamily = isUr ? "'Noto Naskh Arabic','Noto Nastaliq Urdu',sans-serif" : "'Inter',sans-serif";
+
+  let balanceLabel, balanceValue, balanceColor;
+  if(balance === 0){
+    balanceLabel = t('pdfBalanceEqual');
+    balanceValue = formatMoney(0);
+    balanceColor = '#555c68';
+  } else if(balance > 0){
+    balanceLabel = t('pdfBalanceReceive');
+    balanceValue = formatMoney(balance);
+    balanceColor = '#0f6b3c';
+  } else {
+    balanceLabel = t('pdfBalancePay');
+    balanceValue = formatMoney(Math.abs(balance));
+    balanceColor = '#b3261e';
+  }
+
+  const sortedTx = [...state.transactions].sort((a,b)=> new Date(a.date) - new Date(b.date));
+
+  let rows = '';
+  sortedTx.forEach((tx, idx)=>{
+    const typeLabel = tx.type === 'given' ? t('typeGiven') : t('typeReceived');
+    const color = tx.type === 'given' ? '#b3261e' : '#0f6b3c';
+    rows += `
+      <tr style="background:${idx % 2 === 0 ? '#ffffff' : '#f7f8f9'};">
+        <td style="padding:10px 12px; font-size:12px; border-bottom:1px solid #e6e8ec; white-space:nowrap;">${tx.date}</td>
+        <td style="padding:10px 12px; font-size:12.5px; border-bottom:1px solid #e6e8ec;">${escapeHtml(tx.desc)}</td>
+        <td style="padding:10px 12px; font-size:12px; border-bottom:1px solid #e6e8ec; text-align:center;">
+          <span style="display:inline-block; padding:2px 10px; border-radius:20px; font-size:11px; font-weight:700; background:${tx.type==='given' ? '#fbe9e8' : '#e7f3ef'}; color:${color};">${typeLabel}</span>
+        </td>
+        <td style="padding:10px 12px; font-size:13px; font-weight:700; border-bottom:1px solid #e6e8ec; text-align:${isUr?'left':'right'}; color:${color}; white-space:nowrap;">${formatMoney(tx.amount)}</td>
+      </tr>
+    `;
+  });
+
+  if(sortedTx.length === 0){
+    rows = `<tr><td colspan="4" style="padding:24px; text-align:center; color:#8a919c; font-size:13px;">${t('emptyTx')}</td></tr>`;
+  }
+
+  const logoHtml = business.logo
+    ? `<img src="${business.logo}" style="width:56px; height:56px; object-fit:contain; border-radius:8px; background:#fff;">`
+    : `<div style="width:56px; height:56px; border-radius:8px; background:rgba(255,255,255,0.18); display:flex; align-items:center; justify-content:center; font-size:20px; font-weight:800; color:#fff;">${(business.brand||'D').charAt(0)}</div>`;
+
+  const html = `
+  <div dir="${dirAttr}" style="width:794px; min-height:1123px; background:#ffffff; font-family:${fontFamily}; color:#1b1f27; padding:0; box-sizing:border-box;">
+
+    <!-- Header -->
+    <div style="background:linear-gradient(135deg, #0f5f4c 0%, #0a7a5f 100%); padding:32px 40px; display:flex; justify-content:space-between; align-items:center; color:#fff;">
+      <div style="display:flex; align-items:center; gap:16px;">
+        ${logoHtml}
+        <div>
+          <div style="font-size:22px; font-weight:800; letter-spacing:.3px;">${escapeHtml(business.brand)}</div>
+          <div style="font-size:13px; opacity:.92; margin-top:2px;">${escapeHtml(business.owner)}</div>
+        </div>
+      </div>
+      <div style="text-align:${isUr?'left':'right'}; font-size:12.5px; line-height:1.8; opacity:.95;">
+        <div>${escapeHtml(business.mobile)}</div>
+        <div>${escapeHtml(business.address)}</div>
+      </div>
+    </div>
+
+    <div style="height:4px; background:linear-gradient(90deg, #a9822f, #d4b05a, #a9822f);"></div>
+
+    <!-- Statement info -->
+    <div style="padding:28px 40px 10px;">
+      <div style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; background:#f7f8f9; border:1px solid #e6e8ec; border-radius:12px; padding:16px 20px;">
+        <div>
+          <div style="font-size:11px; color:#8a919c; font-weight:600; margin-bottom:3px;">${t('pdfStmtNo')}</div>
+          <div style="font-size:14px; font-weight:700;">${state.stmtNumber}</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#8a919c; font-weight:600; margin-bottom:3px;">${t('pdfDate')}</div>
+          <div style="font-size:14px; font-weight:700;">${state.stmtDate}</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#8a919c; font-weight:600; margin-bottom:3px;">${t('pdfPerson')}</div>
+          <div style="font-size:14px; font-weight:700;">${escapeHtml(state.personName || '-')}</div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:#8a919c; font-weight:600; margin-bottom:3px;">${t('pdfMobile')}</div>
+          <div style="font-size:14px; font-weight:700;">${escapeHtml(state.personMobile || '-')}</div>
+        </div>
+        ${state.personAddress ? `
+        <div>
+          <div style="font-size:11px; color:#8a919c; font-weight:600; margin-bottom:3px;">${t('pdfAddress')}</div>
+          <div style="font-size:14px; font-weight:700;">${escapeHtml(state.personAddress)}</div>
+        </div>` : ''}
+      </div>
+    </div>
+
+    <!-- Transactions table -->
+    <div style="padding:16px 40px 6px;">
+      <table style="width:100%; border-collapse:collapse; border:1px solid #e6e8ec; border-radius:10px; overflow:hidden;">
+        <thead>
+          <tr style="background:#0f5f4c;">
+            <th style="padding:11px 12px; font-size:12px; color:#fff; text-align:${isUr?'right':'left'};">${t('pdfColDate')}</th>
+            <th style="padding:11px 12px; font-size:12px; color:#fff; text-align:${isUr?'right':'left'};">${t('pdfColDesc')}</th>
+            <th style="padding:11px 12px; font-size:12px; color:#fff; text-align:center;">${t('pdfColType')}</th>
+            <th style="padding:11px 12px; font-size:12px; color:#fff; text-align:${isUr?'left':'right'};">${t('pdfColAmount')}</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Summary -->
+    <div style="padding:20px 40px 6px; display:flex; gap:14px;">
+      <div style="flex:1; background:#fbe9e8; border-radius:10px; padding:16px; text-align:center;">
+        <div style="font-size:11.5px; color:#8a919c; font-weight:600; margin-bottom:5px;">${t('pdfTotalGiven')}</div>
+        <div style="font-size:18px; font-weight:800; color:#b3261e;">${formatMoney(given)}</div>
+      </div>
+      <div style="flex:1; background:#e7f3ef; border-radius:10px; padding:16px; text-align:center;">
+        <div style="font-size:11.5px; color:#8a919c; font-weight:600; margin-bottom:5px;">${t('pdfTotalReceived')}</div>
+        <div style="font-size:18px; font-weight:800; color:#0f6b3c;">${formatMoney(received)}</div>
+      </div>
+    </div>
+
+    <div style="padding:14px 40px 24px;">
+      <div style="background:linear-gradient(135deg, #1b1f27, #333a44); border-radius:12px; padding:20px; text-align:center;">
+        <div style="font-size:13px; color:#d8dade; font-weight:600; margin-bottom:6px;">${balanceLabel}</div>
+        <div style="font-size:26px; font-weight:800; color:${balance===0?'#fff':(balance>0?'#6fe3ac':'#ff9d97')};">${balanceValue}</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:20px 40px 36px; margin-top:10px;">
+      <div style="display:flex; justify-content:space-between; align-items:flex-end; border-top:1px solid #e6e8ec; padding-top:20px;">
+        <div style="font-size:11px; color:#8a919c; max-width:380px; line-height:1.6;">
+          ${t('pdfFooter')}
+        </div>
+        <div style="text-align:center;">
+          <div style="width:160px; border-bottom:1.5px solid #8a919c; margin-bottom:6px; height:36px;"></div>
+          <div style="font-size:11.5px; color:#8a919c; font-weight:600;">${t('pdfSign')}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  `;
+
+  document.getElementById('pdf-render-area').innerHTML = html;
+  return document.getElementById('pdf-render-area').firstElementChild;
+}
+
+async function downloadPDF(){
+  const btn = document.getElementById('pdfBtn');
+  const originalHtml = btn.innerHTML;
+  btn.innerHTML = '⏳ ' + t('generating');
+  btn.disabled = true;
+
+  try{
+    const node = buildPdfHtml();
+
+    // give web fonts a moment to be ready
+    if(document.fonts && document.fonts.ready){
+      await document.fonts.ready;
+    }
+    await new Promise(r=>setTimeout(r, 150));
+
+    const canvas = await html2canvas(node, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      windowWidth: 794
+    });
+
+    const imgData = canvas.toDataURL('image/jpeg', 0.95);
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pageWidth = 210;
+    const pageHeight = 297;
+    const imgWidth = pageWidth;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    while(heightLeft > 0){
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    const fileName = `${state.stmtNumber || 'statement'}_${(state.personName||'').replace(/\s+/g,'_') || 'account'}.pdf`;
+    pdf.save(fileName);
+    showToast(t('toastSaved'));
+  }catch(err){
+    console.error(err);
+    showToast('Error generating PDF');
+  }finally{
+    btn.innerHTML = originalHtml;
+    btn.disabled = false;
+    document.getElementById('pdf-render-area').innerHTML = '';
+  }
+}
+
+/* ================= Init ================= */
+function init(){
+  loadState();
+  renderFormFromState();
+  applyI18n();
+  renderTxList();
+  renderSummary();
+
+  document.getElementById('stmtDate').addEventListener('change', saveState);
+}
+
+window.onload = init;
+</script>
+</body>
+</html>
